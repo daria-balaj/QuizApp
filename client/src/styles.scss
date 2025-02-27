@@ -1,0 +1,16 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'https://fonts.googleapis.com/icon?family=Material+Icons';
+@import 'tailwindcss';
+
+* {
+    --bg-color-dark: #1d093b;
+}
+
+body {
+    background-color: var(--bg-color-dark);
+}
+
+mat-icon {
+    vertical-align: bottom;
+}
+
