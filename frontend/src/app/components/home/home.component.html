@@ -1,0 +1,6 @@
+<app-nav></app-nav>
+<div class="component">
+    <div class="grid">
+        <button *ngFor="let category of this.categories" (click)="onCategorySelection()" class="category-button">{{category}}</button>
+    </div>
+</div>

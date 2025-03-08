@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="0de54e62-7c17-4328-9796-b9d9971d481d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/unitbv/quizz_app/QuizzAppApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/unitbv/quizz_app/controller/UsersController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/unitbv/quizz_app/entity/Users.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/unitbv/quizz_app/repository/UsersRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/unitbv/quizz_app/service/UsersService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/unitbv/quizz_app/service/impl/UsersServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/unitbv/quizz_app/QuizzAppApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/.editorconfig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/.postcssrc.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/.vscode/extensions.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/.vscode/launch.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/.vscode/tasks.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/angular.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/public/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/src/app/app.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/src/app/app.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/src/app/app.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/src/app/app.config.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/src/app/app.routes.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/src/app/components/home/home.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/src/app/components/home/home.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/src/app/components/home/home.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/src/app/components/nav/nav.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/src/app/components/nav/nav.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/src/app/components/nav/nav.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/src/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/src/main.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/src/styles.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/tsconfig.app.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/tsconfig.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/tsconfig.spec.json" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="Use Maven wrapper" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 0
+}]]></component>
+  <component name="ProjectId" id="2txpkinyohNfh1vUAVdTJvM1kwx" />
+  <component name="ProjectViewState">
+    <option name="autoscrollToSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="QuizzAppApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="quizz-app" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.unitbv.quizz_app.QuizzAppApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0de54e62-7c17-4328-9796-b9d9971d481d" name="Changes" comment="" />
+      <created>1741303737780</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1741303737780</updated>
+      <workItem from="1741303746202" duration="2210000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

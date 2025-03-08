@@ -1,0 +1,30 @@
+.component {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin-top: 1rem;
+    align-items: center;
+}
+
+.grid {
+    margin: auto;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+}
+
+.category-button {
+    background-color: #722e81;
+    border: 1px solid #dee2e6;
+    width: 160px;
+    height: 100px;
+    border-radius: 0.25rem;
+    color: #ffffff;
+    cursor: pointer;
+    display: block;
+    font-size: 18px;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem 1rem;
+    text-align: center;
+    text-decoration: none;
+}

@@ -6,14 +6,10 @@
     align-content: center;
     color: white;
     border-bottom: 2px solid var(--electric-violet);
-    ul {
-        list-style-type: none;
-        gap: 1rem;
-        height: fit-content;
-    }
 }
 
-// mat-icon {
-//     vertical-align: bottom;
-//     text-align: center;
-// }
+ul {
+    list-style-type: none;
+    gap: 1rem;
+    height: fit-content;
+}

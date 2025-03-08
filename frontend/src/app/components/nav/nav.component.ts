@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatIconModule
   ],
   templateUrl: './nav.component.html',
-  styleUrl: './nav.component.scss'
+  styleUrl: './nav.component.css'
 })
 export class NavComponent {
 
