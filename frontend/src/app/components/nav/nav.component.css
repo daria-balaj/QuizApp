@@ -1,15 +1,211 @@
-.navbar {
+.navbar-wrapper {
+    width: 100%;
+    margin-bottom: 2rem;
+    position: relative;
+    color: white;
+  }
+  
+  .navbar {
+    max-width: 1440px;
+    margin: 0 auto;
+    justify-content: space-between;
+    padding-inline: 2rem;
+  }
+
+  @media screen and (max-width: 768px) {
+    .navbar {
+      padding-inline: 1rem;
+    }
+    
+  }
+
+/* .navbar {
     position: absolute;
     top: 0;
     left: 0;
     justify-content: space-between;
     align-content: center;
     color: white;
-    border-bottom: 2px solid var(--electric-violet);
-}
+} */
 
 ul {
     list-style-type: none;
     gap: 1rem;
     height: fit-content;
 }
+
+
+.form-control {    
+    border: 1px solid var(--light-purple);
+}
+
+.mat-mdc-menu-panel, .mat-menu-below menu, .mat-menu-before, .menu {
+    max-width: unset !important;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: poppins;
+  }
+  
+  /*The main form container*/
+  .login-container {
+    width: 320px;
+    padding: 30px;
+    background: rgba(22, 1, 32, 0.90);
+    box-sizing: border-box;
+    /* box-shadow: 0 15px 25px rgba(0,0,0,.6); */
+    border-radius: 15px;
+  }
+  
+  .login-container h2 {
+    margin: 0 0 30px;
+    padding: 0;
+    color: #fff;
+    text-align: center;
+  }
+  
+  .login-container .user-box {
+    position: relative;
+  }
+  
+  .login-container .user-box input {
+    width: 100%;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #fff;
+    margin-bottom: 30px;
+    border: none;
+    border-bottom: 1px solid #fff;
+    outline: none;
+    /* background: transparent; */
+  }
+  
+  .login-container .user-box label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #fff;
+    pointer-events: none;
+    transition: .5s;
+  }
+  
+  .login-container .user-box input:focus ~ label,
+  .login-container .user-box input:valid ~ label {
+    top: -20px;
+    left: 0;
+    /* color: #7b45b8; */
+    font-size: 12px;
+  }
+  
+  .login-container form a {
+    position: relative;
+    display: inline-block;
+    padding: 10px 20px;
+    color: #e9dcf7;
+    font-size: 16px;
+    text-decoration: none;
+    text-transform: uppercase;
+    overflow: hidden;
+    transition: .5s;
+    margin-top: 40px;
+    letter-spacing: 5px;
+  }
+  
+  .login-container a:hover {
+    /* background: #e9dcf7; */
+    /* color: #461b6e; */
+    border-radius: 5px;
+    box-shadow: 0 0 5px #9d6dd1,
+                0 0 25px #9d6dd1,
+                0 0 50px #9d6dd1,
+                0 0 100px #9d6dd1;
+  }
+  
+  .login-container a span {
+    position: absolute;
+    display: block;
+  }
+  
+  .login-container a span:nth-child(1) {
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #7b45b8);
+    animation: btn-anim1 1s linear infinite;
+  }
+  
+  @keyframes btn-anim1 {
+    0% {
+      left: -100%;
+    }
+    50%,100% {
+      left: 100%;
+    }
+  }
+  
+  .login-container a span:nth-child(2) {
+    top: -100%;
+    right: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(180deg, transparent, #e9dcf7);
+    animation: btn-anim2 1s linear infinite;
+    animation-delay: .25s;
+  }
+  
+  @keyframes btn-anim2 {
+    0% {
+      top: -100%;
+    }
+    50%,100% {
+      top: 100%;
+    }
+  }
+  
+  .login-container a span:nth-child(3) {
+    bottom: 0;
+    right: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(270deg, transparent, #7b45b8);
+    animation: btn-anim3 1s linear infinite;
+    animation-delay: .5s;
+  }
+  
+  @keyframes btn-anim3 {
+    0% {
+      right: -100%;
+    }
+    50%,100% {
+      right: 100%;
+    }
+  }
+  
+  .login-container a span:nth-child(4) {
+    bottom: -100%;
+    left: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(360deg, transparent, #7b45b8);
+    animation: btn-anim4 1s linear infinite;
+    animation-delay: .75s;
+  }
+  
+  @keyframes btn-anim4 {
+    0% {
+      bottom: -100%;
+    }
+    50%,100% {
+      bottom: 100%;
+    }
+  }
+
+  input:-webkit-autofill-selected:hover {
+    background-color: transparent !important;
+
+  }

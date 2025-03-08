@@ -1,6 +1,8 @@
-<div class="navbar w-screen h-12 px-4 content-center flex flex-row flex-wrap">
-    <a routerLink="/">
-        <svg xmlns="http://www.w3.org/2000/svg" version="1.0" width="22.000000pt" height="20.000000pt" viewBox="0 0 472.000000 456.000000" preserveAspectRatio="xMidYMid meet">
+<div class="navbar-wrapper mb-5">
+<div class="navbar w-screen h-12 px-4 mb-4 content-center flex flex-row flex-wrap">
+    <a></a>
+    <!-- <a routerLink="/">
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.0" width="26.000000pt" height="24.000000pt" viewBox="0 0 472.000000 456.000000" preserveAspectRatio="xMidYMid meet">
 
             <g transform="translate(0.000000,456.000000) scale(0.100000,-0.100000)" fill="#ffffff" stroke="none">
             <path d="M1875 4440 c-144 -48 -245 -86 -252 -96 -7 -10 -13 -30 -13 -45 0 -23 -6 -29 -44 -41 -40 -13 -44 -13 -55 4 -28 45 -49 42 -294 -39 -875 -289 -810 -265 -834 -302 -30 -44 -30 -98 0 -142 21 -32 36 -39 334 -137 l312 -103 3 -345 3 -346 -81 -40 c-97 -47 -193 -124 -251 -200 -152 -202 -329 -748 -413 -1275 -54 -344 -92 -827 -72 -926 36 -182 179 -318 367 -350 131 -22 280 27 377 124 53 53 93 129 273 529 48 107 95 203 103 213 14 16 65 17 807 17 742 0 793 -1 807 -17 8 -10 57 -110 108 -223 51 -113 115 -254 142 -315 77 -169 128 -230 238 -285 259 -131 570 18 631 302 28 127 -32 753 -107 1125 -58 291 -112 485 -196 713 -121 327 -222 460 -431 565 -44 22 -79 44 -78 48 0 4 1 160 1 346 l0 339 150 50 150 50 0 -161 -1 -162 -43 -26 c-64 -39 -101 -107 -101 -184 1 -97 45 -163 135 -204 112 -51 239 2 290 121 41 96 7 206 -82 263 l-47 30 0 186 -1 185 58 18 c121 38 162 75 162 146 0 34 -20 79 -43 99 -14 11 -386 135 -1327 442 -217 71 -406 128 -420 128 -14 0 -133 -36 -265 -79z m1810 -1285 c14 -13 25 -36 25 -50 0 -14 -11 -37 -25 -50 -13 -14 -36 -25 -50 -25 -14 0 -37 11 -50 25 -14 13 -25 36 -25 50 0 14 11 37 25 50 13 14 36 25 50 25 14 0 37 -11 50 -25z m-2443 -556 c189 -95 403 -142 730 -159 526 -28 991 63 1179 229 l47 41 81 -41 c127 -63 196 -138 270 -291 199 -413 352 -1131 378 -1778 5 -131 3 -164 -11 -207 -36 -109 -153 -193 -270 -193 -88 0 -152 26 -211 85 -41 42 -62 78 -117 200 -243 543 -247 551 -323 586 -38 18 -83 19 -850 19 -767 0 -812 -1 -850 -19 -76 -35 -75 -33 -345 -631 -56 -124 -89 -165 -161 -205 -48 -27 -63 -30 -139 -30 -76 0 -91 3 -139 30 -67 37 -115 93 -137 158 -48 146 38 906 157 1382 78 309 219 665 304 763 47 54 146 125 210 150 l50 20 45 -40 c25 -22 71 -53 102 -69z"/>
@@ -11,12 +13,46 @@
             
             </g>
         </svg>
-    </a>
-    <ul class="flex flex-row">
+    </a> -->
+
+    <ul class="flex flex-row items-center">
         <li>
-            <a routerLink="/account">   
-                <mat-icon>account_circle</mat-icon>
-            </a>
+          <a [matMenuTriggerFor]="menu" class="p-2 rounded-full flex items-center justify-center">
+            <mat-icon [matBadge]="1" [matBadgeColor]="'accent'" [matBadgeHidden]="(this.authService.currentUser$ | async) === null" class="text-purple-200">account_circle</mat-icon>
+          </a>
+          <mat-menu #menu="matMenu" class="menu" [hasBackdrop]="false">
+            <div class="login-container" (click)="$event.stopPropagation()" (keydown)="$event.stopPropagation()">
+              <ng-container *ngIf="(this.authService.currentUser$ | async) as user">
+                <h2>User Menu</h2>
+                <button mat-menu-item (click)="logout()" class="user-box">
+                  <mat-icon>logout</mat-icon>
+                  <span>Logout</span>
+                </button>
+              </ng-container>
+              <ng-container *ngIf="!(this.authService.currentUser$ | async)" (click)="$event.stopPropagation()">
+                <h2>Login</h2>
+                <span id="error" class="text-red-300 text-sm mb-2 block" [hidden]="errorMessage.length === 0">{{errorMessage}}</span>
+                <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                  <div class="user-box">
+                    <input id="email" type="email" formControlName="email" required autocomplete="off">
+                    <label for="email">Email</label>
+                  </div>
+                  <div class="user-box">
+                    <input id="password" type="password" formControlName="password" required>
+                    <label for="password">Password</label>
+                  </div>
+                  <a href="javascript:void(0)" (click)="onSubmit()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    Submit
+                  </a>
+                </form>
+              </ng-container>
+            </div>
+          </mat-menu>
         </li>
-    </ul>
+      </ul>
+</div>
 </div>

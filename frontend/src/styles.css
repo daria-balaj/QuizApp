@@ -4,13 +4,32 @@
 
 * {
     --bg-color-dark: #1d093b;
+    --medium-purple: #9d6dd1;
+    --light-purple: #462d6d;
+}
+
+html {
+    height: 100%;
 }
 
 body {
-    background-color: var(--bg-color-dark);
+    background: linear-gradient(#211431, #3a2456);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(45deg,#211431, #3a2456);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 mat-icon {
     vertical-align: bottom;
+    font-size: 34px !important;
 }
+
+.mat-mdc-menu-panel {
+    max-width: unset !important;
+    box-shadow: none !important;
+  }
+
 
