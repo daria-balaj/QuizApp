@@ -5,19 +5,20 @@ import com.unitbv.quizz_app.entity.Users;
 import java.util.List;
 import java.util.Optional;
 
-
 public interface UsersService {
-    Users createUser(String name, String email, String password);
+    
+    Users createUser(String username, String email, String password);
 
     List<Users> getAllUsers();
 
-    Optional<Users> getUserById(int id);
 
-    Optional<Users> getUserByName(String name);
+    Optional<Users> getUserById(Long id);
 
-    Users updateUser(int id, String name, String email, String password);
+    Optional<Users> getUserByUsername(String username);
 
-    void deleteUser(int id);
+    Users updateUser(Long id, String username, String email, String password);
 
-  //  Users loginUser(String name);
+    void deleteUser(Long id);
+
+    // Users loginUser(String name);  
 }

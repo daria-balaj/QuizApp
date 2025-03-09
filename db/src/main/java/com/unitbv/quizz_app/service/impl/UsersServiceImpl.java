@@ -3,6 +3,7 @@ package com.unitbv.quizz_app.service.impl;
 import com.unitbv.quizz_app.entity.Users;
 import com.unitbv.quizz_app.repository.UsersRepository;
 import com.unitbv.quizz_app.service.UsersService;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -18,45 +19,48 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public Users createUser(String name, String email, String password) {
+    public Users createUser(String username, String email, String password) {
         Users user = new Users();
-        user.setName(name);
-        user.setCreated(LocalDateTime.now());
+        user.setUsername(username);  
+        user.setCreatedAt(LocalDateTime.now());  
         user.setEmail(email);
-        user.setPassword(password);
+        user.setHashedPassword(password);  
         return usersRepository.save(user);
     }
 
     @Override
+    @Cacheable(value="users", key="'all'")
     public List<Users> getAllUsers(){
         return usersRepository.findAll();
     }
 
     @Override
-    public Optional<Users> getUserById(int id) {
+    @Cacheable(value="users", key="#id")
+    public Optional<Users> getUserById(Long id) {  
         return usersRepository.findById(id);
     }
 
     @Override
-    public Optional<Users> getUserByName(String name) {
-        return usersRepository.findByName(name);
+    @Cacheable(value="users", key="#username")
+    public Optional<Users> getUserByUsername(String username) {  
+        return usersRepository.findByUsername(username);  
     }
 
     @Override
-    public Users updateUser(int id, String name, String email, String password) {
+    public Users updateUser(Long id, String username, String email, String password) {  
         Optional<Users> optionalUser = usersRepository.findById(id);
         if (optionalUser.isPresent()) {
             Users user = optionalUser.get();
-            user.setName(name);
+            user.setUsername(username);  
             user.setEmail(email);
-            user.setPassword(password);
+            user.setHashedPassword(password);  
             return usersRepository.save(user);
         }
         return null;
     }
 
     @Override
-    public void deleteUser(int id) {
+    public void deleteUser(Long id) { 
         usersRepository.deleteById(id);
     }
 }
