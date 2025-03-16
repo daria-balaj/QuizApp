@@ -20,6 +20,7 @@ body {
     background: linear-gradient(45deg,#211431, #3a2456);
     background-repeat: no-repeat;
     background-attachment: fixed;
+    overflow-x: hidden;
 }
 
 mat-icon {

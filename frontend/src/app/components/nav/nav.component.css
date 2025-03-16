@@ -1,12 +1,11 @@
 .navbar-wrapper {
     width: 100%;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     position: relative;
     color: white;
   }
   
   .navbar {
-    max-width: 1440px;
     margin: 0 auto;
     justify-content: space-between;
     padding-inline: 2rem;

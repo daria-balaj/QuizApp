@@ -1,6 +1,6 @@
 <app-nav></app-nav>
 <div class="component w-screen">
-    <div class="quiz-app w-screen">
+    <div class="quiz-app">
         <header>
           <h1 class="app-title">Quizmo</h1>
           <p class="app-subtitle">Challenge yourself with our curated questions</p>
@@ -8,6 +8,25 @@
         
         <div class="content-area">
           <section class="categories-section">
+            <h2 class="section-title">Choose Your Mode</h2>
+            <div class="mode-selector">
+              <div class="mode-option">
+                <input type="radio" id="singlePlayer" name="mode" value="single" [(ngModel)]="mode" (change)="updateGameMode('single')">
+                <label for="singlePlayer">
+                  <mat-icon>person</mat-icon>
+                  Single Player
+                </label>
+              </div>
+              <div class="mode-option">
+                <input type="radio" id="multiPlayer" name="mode" value="multi" [(ngModel)]="mode" (change)="updateGameMode('multi')">
+                <label for="multiPlayer">
+                  <mat-icon>group</mat-icon>
+                  Multiplayer
+                </label>
+              </div>
+            </div>
+          <!-- </section> -->
+          <!-- <section class="categories-section"> -->
             <h2 class="section-title">Choose Your Categories</h2>
                 <p class="note">Please select at least one category</p>
             <div class="category-grid">

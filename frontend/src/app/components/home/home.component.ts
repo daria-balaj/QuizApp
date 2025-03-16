@@ -3,6 +3,7 @@ import { NavComponent } from '../nav/nav.component';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-home',
@@ -10,7 +11,8 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     NavComponent,
     MatButtonModule,
-    FormsModule
+    FormsModule,
+    MatIconModule
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
@@ -29,6 +31,8 @@ export class HomeComponent implements OnInit {
   difficulty: string = 'easy';
 
   questionCount: number = 10;
+
+  mode = 'single';
 
   constructor() { }
 
@@ -60,5 +64,9 @@ export class HomeComponent implements OnInit {
       console.log('- Question Count:', this.questionCount);
       
     }
+  }
+
+  updateGameMode(mode: string = 'single'): void {
+    this.mode = this.mode = mode;
   }
 }
