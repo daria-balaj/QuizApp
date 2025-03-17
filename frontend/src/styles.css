@@ -25,7 +25,10 @@ body {
 
 mat-icon {
     vertical-align: bottom;
-    font-size: 34px !important;
+    font-size: 30px !important;
+    height: fit-content !important;
+    width: fit-content !important;
+
 }
 
 .mat-mdc-menu-panel {

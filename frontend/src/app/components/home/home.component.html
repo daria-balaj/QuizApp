@@ -106,19 +106,6 @@
               <input type="range" min="5" max="25" [(ngModel)]="questionCount" (input)="updateQuestionCount()" class="count-slider" id="questionCount">
               <div class="count-display" id="countDisplay">{{ questionCount }} Questions</div>
             </div>
-            
-            <!-- <div class="selected-info">
-              <h3>Your Quiz</h3>
-              <div class="selected-list">
-                <span class="selected-category" *ngIf="categories.history" data-category="history">History</span>
-                <span class="selected-category" *ngIf="categories.science" data-category="science">Science</span>
-                <span class="selected-category" *ngIf="categories.geography" data-category="geography">Geography</span>
-                <span class="selected-category" *ngIf="categories.sports" data-category="sports">Sports</span>
-                <span class="selected-category" *ngIf="categories.movies" data-category="movies">Movies</span>
-                <span class="selected-category" *ngIf="categories.music" data-category="music">Music</span>
-              </div>
-            </div> -->
-            
             <button class="start-btn" id="startBtn" [disabled]="!isCategorySelected()" (click)="startQuiz()">Start Quiz</button>
           </section>
         </div>

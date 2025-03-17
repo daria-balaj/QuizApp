@@ -1,0 +1,9 @@
+<div class="flex justify-center align-items-center w-90 h-90">
+    <app-question 
+        [question]="this.questions[currentIndex]"
+        [index]="this.currentIndex"
+        [totalQuestions]="this.questions.length"
+        (answerSelected)="onAnswerSelected($event)"
+        (next)="nextQuestion()"
+    ></app-question>
+</div>

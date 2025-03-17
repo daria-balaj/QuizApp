@@ -17,7 +17,7 @@ export class AuthenticationService {
   currentUser$ = this.currentUser.asObservable();
 
   register(newUser: any) {
-    return this.httpClient.post<User>(`${environment.apiUrl}/register`, newUser).pipe(
+    return this.httpClient.post<User>(`${environment.authApiUrl}/register`, newUser).pipe(
       map(user => {
         console.log(user);
         if (user) {
@@ -32,7 +32,7 @@ export class AuthenticationService {
   }
 
   login(email: string, password: string) : Observable<boolean> {
-    return this.httpClient.post<string>(`${environment.apiUrl}/login`, { email: email, password: password }).pipe(
+    return this.httpClient.post<string>(`${environment.authApiUrl}/login`, { email: email, password: password }).pipe(
       map((response: any) => {
         console.log(response);
         if (response) {

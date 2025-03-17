@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { QuizService } from '../../services/quiz.service';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatButtonModule,
     FormsModule,
     MatIconModule
-  ],
+],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -28,24 +30,28 @@ export class HomeComponent implements OnInit {
     music: false
   };
 
+  selectedCategories: string[] = [];
+
   difficulty: string = 'easy';
 
   questionCount: number = 10;
 
   mode = 'single';
 
-  constructor() { }
+  constructor(private quizService: QuizService, private router: Router) {}
 
   ngOnInit(): void {
+    // this.quizService.getCategories().subscribe(categories => {
+    //   this.categories = categories;
+    // });
   }
 
   updateCategories(): void {
-    console.log('Categories updated:', this.categories);
+    this.selectedCategories = Object.keys(this.categories).filter(category => this.categories[category as keyof typeof this.categories]);
   }
 
   updateDifficulty(level: string): void {
     this.difficulty = level;
-    console.log('Difficulty updated to:', level);
   }
 
   updateQuestionCount(): void {
@@ -53,7 +59,8 @@ export class HomeComponent implements OnInit {
   }
 
   isCategorySelected(): boolean {
-    return Object.values(this.categories).some(value => value === true);
+    return this.selectedCategories.length > 0;
+    // return Object.values(this.categories).some(value => value === true);
   }
 
   startQuiz(): void {
@@ -62,7 +69,7 @@ export class HomeComponent implements OnInit {
       console.log('- Categories:', this.categories);
       console.log('- Difficulty:', this.difficulty);
       console.log('- Question Count:', this.questionCount);
-      
+      this.router.navigate(['/quiz']);
     }
   }
 

@@ -1,0 +1,208 @@
+.question-container {
+    display: flex;
+    flex-direction: column;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 20px;
+    padding: 30px;
+    color: #e9dcf7;
+    width: 90%;
+    max-width: 630px;
+  }
+
+  @media screen and (max-width: 340px) {
+    .question-container {
+        background-color: transparent;
+    }
+  }
+  
+  /* Progress bar styles */
+  .question-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 30px;
+  }
+  
+  .question-progress {
+    flex: 1;
+  }
+  
+  .progress-bar {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+  
+  .progress-fill {
+    height: 100%;
+    background: #e9dcf7;
+    border-radius: 4px;
+    transition: width 0.3s ease;
+  }
+  
+  .progress-text {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+  }
+  
+  /* Timer styles */
+  .timer {
+    display: flex;
+    align-items: center;
+    padding: 8px 15px;
+    background: rgba(233, 220, 247, 0.15);
+    border-radius: 30px;
+    margin-left: 15px;
+  }
+  
+  .timer-icon {
+    margin-right: 8px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .timer-text {
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+  
+  /* Question content styles */
+  .question-content {
+    margin-bottom: 30px;
+  }
+  
+  .question-text {
+    font-size: 1.6rem;
+    margin-bottom: 30px;
+    line-height: 1.4;
+  }
+  
+  /* Options grid styles */
+  .options-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 15px;
+  }
+  
+  .option-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    user-select: none;
+  }
+  
+  .option-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-3px);
+  }
+  
+  .option-item.selected {
+    border-color: #e9dcf7;
+    box-shadow: 0 0 15px rgba(233, 220, 247, 0.3);
+    background: rgba(233, 220, 247, 0.15);
+    transform: translateY(-5px);
+  }
+  
+  .option-marker {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    margin-right: 15px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+  
+  .option-item.selected .option-marker {
+    background: #e9dcf7;
+    color: #211431;
+  }
+  
+  .option-text {
+    font-size: 1.1rem;
+    line-height: 1.4;
+  }
+  
+  /* Action buttons styles */
+  .question-actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .action-btn {
+    display: block;
+    padding: 12px 25px;
+    border: none;
+    background: #e9dcf7;
+    color: #211431;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    user-select: none;
+  }
+  
+  .action-btn::before {
+    content: '';
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: 0.5s;
+    z-index: -1;
+  }
+  
+  .action-btn:hover::before {
+    left: 100%;
+  }
+  
+  .action-btn:hover {
+    box-shadow: 0 5px 20px rgba(233, 220, 247, 0.4);
+    transform: translateY(-3px);
+  }
+  
+  .action-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+  
+  .action-btn:disabled::before {
+    display: none;
+  }
+  
+  .finish-btn {
+    background: linear-gradient(to right, #e9dcf7, #c9b2e6);
+  }
+  
+  @media (max-width: 768px) {
+    
+    .timer {
+        height: fit-content !important;
+        width: fit-content;
+    }
+    
+    .question-text {
+      font-size: 1.4rem;
+    }
+    
+    .options-grid {
+      grid-template-columns: 1fr;
+    }
+  }
