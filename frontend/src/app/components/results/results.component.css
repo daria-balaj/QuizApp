@@ -1,0 +1,32 @@
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding-bottom: 90px;
+}
+
+.action-btn {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.play-again-btn {
+    background: #e9dcf7;
+    color: #211431;
+}
+
+.home-btn {
+    background: transparent;
+    color: #e9dcf7;
+    border: 2px solid #e9dcf7;
+}
+
+.action-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(233, 220, 247, 0.3);
+}

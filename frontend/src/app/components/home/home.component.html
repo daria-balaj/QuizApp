@@ -1,11 +1,6 @@
 <app-nav></app-nav>
 <div class="component w-screen">
-    <div class="quiz-app">
-        <header>
-          <h1 class="app-title">Quizmo</h1>
-          <p class="app-subtitle">Challenge yourself with our curated questions</p>
-        </header>
-        
+    <div class="quiz-app">        
         <div class="content-area">
           <section class="categories-section">
             <h2 class="section-title">Choose Your Mode</h2>
@@ -106,7 +101,7 @@
               <input type="range" min="5" max="25" [(ngModel)]="questionCount" (input)="updateQuestionCount()" class="count-slider" id="questionCount">
               <div class="count-display" id="countDisplay">{{ questionCount }} Questions</div>
             </div>
-            <button class="start-btn" id="startBtn" [disabled]="!isCategorySelected()" (click)="startQuiz()">Start Quiz</button>
+              <button class="start-btn" id="startBtn" [disabled]="!isCategorySelected()" (click)="startQuiz()">Start Quiz</button>
           </section>
         </div>
     </div>

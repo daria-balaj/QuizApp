@@ -21,9 +21,9 @@
       <div class="options-grid">
         <div 
           *ngFor="let option of this.question?.options; let i = index" 
-          class="option-item" 
+          class="option-item"
           [class.selected]="selectedAnswer === option"
-          (click)="selectOption(option)">
+          (click)="this.selectOption(option)">
           <div class="option-marker">{{ ['A', 'B', 'C', 'D'][i] }}</div>
           <div class="option-text">{{ option }}</div>
         </div>

@@ -62,18 +62,20 @@ export class HomeComponent implements OnInit {
     return this.selectedCategories.length > 0;
     // return Object.values(this.categories).some(value => value === true);
   }
+  
+  updateGameMode(mode: string = 'single'): void {
+    this.mode = this.mode = mode;
+  }
 
   startQuiz(): void {
     if (this.isCategorySelected()) {
-      console.log('Starting quiz with:');
-      console.log('- Categories:', this.categories);
-      console.log('- Difficulty:', this.difficulty);
-      console.log('- Question Count:', this.questionCount);
+      this.quizService.setQuizSettings(
+        this.mode,
+        this.selectedCategories,
+        this.difficulty,
+        this.questionCount
+      )
       this.router.navigate(['/quiz']);
     }
-  }
-
-  updateGameMode(mode: string = 'single'): void {
-    this.mode = this.mode = mode;
   }
 }

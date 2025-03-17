@@ -1,1 +1,13 @@
-<p>results works!</p>
+<app-nav></app-nav>
+    <div *ngIf="this.quizService.getMode() == 'single'" >
+        <app-singleplayer-results></app-singleplayer-results>
+    </div>
+    <div *ngIf="this.quizService.getMode() == 'multi'" >
+        <app-multiplayer-results></app-multiplayer-results>
+    </div>
+            
+<div class="action-buttons">
+    <button class="action-btn play-again-btn">Play Again</button>
+    <button class="action-btn home-btn">Return to Home</button>
+</div>
+  

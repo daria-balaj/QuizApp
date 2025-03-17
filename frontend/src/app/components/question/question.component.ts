@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subscription, interval } from 'rxjs';
 import { Question } from '../../models/question';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './question.component.html',
   styleUrl: './question.component.css'
 })
-export class QuestionComponent {
+export class QuestionComponent implements OnChanges {
   @Input() question: Question | undefined;
   @Input() index!: number;
   @Input() totalQuestions!: number;
@@ -29,7 +29,7 @@ export class QuestionComponent {
   @Output() next = new EventEmitter<void>();
   @Output() finish = new EventEmitter<void>();
 
-  ngOnInit(): void {
+  ngOnChanges(): void {
     this.startTimer();
   }
 
@@ -70,6 +70,7 @@ export class QuestionComponent {
     if (!this.selectedAnswer) {
       this.answerSelected.emit('');
     }
+    this.next.emit();
   }
 
   formatTime(seconds: number): string {

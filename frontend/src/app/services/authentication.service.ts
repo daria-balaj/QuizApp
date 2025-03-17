@@ -7,7 +7,6 @@ import { User } from '../models/user';
 @Injectable({
   providedIn: 'root'
 })
-
 export class AuthenticationService {
 
   constructor(private httpClient: HttpClient) { }
@@ -15,6 +14,8 @@ export class AuthenticationService {
   currentUser = new BehaviorSubject<User | null>(null);
 
   currentUser$ = this.currentUser.asObservable();
+
+  token = new BehaviorSubject<string | null>(null);
 
   register(newUser: any) {
     return this.httpClient.post<User>(`${environment.authApiUrl}/register`, newUser).pipe(
@@ -36,13 +37,19 @@ export class AuthenticationService {
       map((response: any) => {
         console.log(response);
         if (response) {
-          localStorage.setItem("token", response.token);
+          // localStorage.setItem("token", response.token);
+          this.token.next(response.token);
           this.currentUser.next(response);
           return true;
         }
         return false;
       } )
     )
+  }
+
+  getToken() {
+    console.log(this.token.subscribe());
+    return this.token.subscribe();
   }
 
   logout() {

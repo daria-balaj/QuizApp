@@ -1,0 +1,62 @@
+<!-- <app-nav></app-nav> -->
+<div class="component w-screen my-5">
+  <div class="quiz-app w-screen">
+    <div class="results-container">
+        <div class="podium-container">          <div class="podium-item second-place">
+            <div class="player-avatar">
+              <span class="player-rank">2</span>
+              <img [src]= "secondPlacePlayer().profileImg || 'https://placehold.co/100'" alt="Player 2" class="avatar-img podium-avatar">
+            </div>
+            <div class="player-platform">
+              <div class="player-name">{{secondPlacePlayer().username}}</div>
+              <div class="player-score">{{secondPlacePlayer().score}}</div>
+            </div>
+          </div>
+          
+            <div class="podium-item first-place">
+            <div class="player-avatar">
+                <span class="player-rank">1</span>
+                <img [src]= "firstPlacePlayer().profileImg || 'https://placehold.co/100'" alt="Player 2" class="avatar-img podium-avatar">
+                <div class="winner-crown"></div>
+            </div>
+            <div class="player-platform">
+                <div class="player-name">{{firstPlacePlayer().username}}</div>
+                <div class="player-score">{{firstPlacePlayer().score}}</div>
+            </div>
+            </div>
+          
+            <div class="podium-item third-place">
+                <div class="player-avatar">
+                    <span class="player-rank">3</span>
+                    <img [src]= "thirdPlacePlayer()?.profileImg || 'https://placehold.co/100'" alt="Player 2" class="avatar-img podium-avatar">
+                </div>
+                <div class="player-platform">
+                    <div class="player-name">{{thirdPlacePlayer()?.username}}</div>
+                    <div class="player-score">{{thirdPlacePlayer()?.score}}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="leaderboard-section">        
+            <div class="leaderboard-table">
+            <div class="leaderboard-header">
+                <div class="rank-col">Rank</div>
+                <div class="player-col">Player</div>
+                <div class="score-col">Score</div>
+                <div class="correct-col">Correct</div>
+            </div>
+          
+            <div *ngFor="let player of this.players" class="leaderboard-row">
+                <div class="rank-col">{{player.rank}}</div>
+                <div class="player-col">
+                    <img [src]= "player.profileImg || 'https://placehold.co/100'" alt="Player_profile_img" class="avatar-img">
+                    <span>{{player.username}}</span>
+                </div>
+                <div class="score-col">{{player.score}}</div>
+                <div class="correct-col">{{player.correct}}</div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

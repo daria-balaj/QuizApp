@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatMenuModule } from '@angular/material/menu';
@@ -25,6 +25,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatInputModule,
     MatFormFieldModule,
     ReactiveFormsModule,
+    RouterLink
   ],
   templateUrl: './nav.component.html',
   styleUrl: './nav.component.css'
