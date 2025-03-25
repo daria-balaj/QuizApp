@@ -20,5 +20,5 @@ public class Answers {
     private String text;
 
     @Column(name="is_correct", nullable = false)
-    private boolean is_correct;
+    private boolean isCorrect;
 }
