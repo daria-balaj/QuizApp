@@ -18,8 +18,6 @@ public class UsersController {
         this.usersService = usersService;
     }
 
-
-
     @GetMapping
     public ResponseEntity<List<Users>> getAllUsers() {
         List<Users> users = usersService.getAllUsers();

@@ -20,7 +20,6 @@ public class Questions {
     @JoinColumn(name = "category_id", nullable = false)
     private Categories category;
 
-    @ManyToOne
-    @JoinColumn(name = "difficulty_id", nullable = false)
-    private Difficulties difficulty;
+    @Column(name = "difficulty_id", nullable = false)
+    private Long difficultyId;
 }

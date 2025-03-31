@@ -45,7 +45,6 @@ public class CategoriesServiceImpl implements  CategoriesService {
         return categoriesRepository.findByNameContainingIgnoreCase(searchTerm);
     }
 
-
     @Override
     @Cacheable(value = "categories", key = "'withQuestions'")
     public List<Categories> getCategoriesWithQuestions() {

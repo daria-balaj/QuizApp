@@ -39,18 +39,6 @@ public class AnswersServiceImpl implements AnswersService {
     }
 
     @Override
-    @Cacheable(value = "answers", key = "'all'")
-    public List<Answers> getCorrectAnswers() {
-        return answersRepository.findByIsCorrect(true);
-    }
-
-    @Override
-    @Cacheable(value = "answers", key = "'all'")
-    public List<Answers> getIncorrectAnswers() {
-        return answersRepository.findByIsCorrect(false);
-    }
-
-    @Override
     public Answers saveAnswer(Answers answer) {
         return answersRepository.save(answer);
     }
@@ -64,5 +52,4 @@ public class AnswersServiceImpl implements AnswersService {
     public void deleteAnswer(Long id) {
         answersRepository.deleteById(id);
     }
-
 }

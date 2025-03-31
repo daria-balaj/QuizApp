@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { QuizService } from '../../services/quiz.service';
 import { Router } from '@angular/router';
 import { Category } from '../../models/category';
-import { Difficulties } from '../../enums/difficulty';
+import { Difficulty } from '../../enums/difficulty';
 
 @Component({
   selector: 'app-home',
@@ -27,9 +27,9 @@ export class HomeComponent implements OnInit {
 
   selectedCategories: Category[] = [];
 
-  difficulty: Difficulties = Difficulties.EASY;
+  difficulty: Difficulty = Difficulty.EASY;
 
-  Difficulties = Difficulties;
+  Difficulty = Difficulty;
 
   questionCount: number = 10;
 
@@ -55,7 +55,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  updateDifficulty(level: Difficulties): void {
+  updateDifficulty(level: Difficulty): void {
     this.difficulty = level;
   }
 

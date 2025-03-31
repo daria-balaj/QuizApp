@@ -1,14 +1,10 @@
 package com.unitbv.quizz_app.service.impl;
 
 import com.unitbv.quizz_app.entity.Categories;
-import com.unitbv.quizz_app.entity.Difficulties;
 import com.unitbv.quizz_app.entity.Questions;
 import com.unitbv.quizz_app.repository.CategoriesRepository;
-import com.unitbv.quizz_app.repository.DifficultiesRepository;
 import com.unitbv.quizz_app.repository.QuestionsRepository;
 import com.unitbv.quizz_app.service.QuestionsService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.cache.annotation.Cacheable;
@@ -22,68 +18,57 @@ public class QuestionsServiceImpl implements QuestionsService {
 
     private final QuestionsRepository questionsRepository;
     private final CategoriesRepository categoriesRepository;
-    private final DifficultiesRepository difficultiesRepository;
 
-    public QuestionsServiceImpl (
+    public QuestionsServiceImpl(
             QuestionsRepository questionsRepository,
-            CategoriesRepository categoriesRepository,
-            DifficultiesRepository difficultiesRepository
+            CategoriesRepository categoriesRepository
     ) {
         this.questionsRepository = questionsRepository;
         this.categoriesRepository = categoriesRepository;
-        this.difficultiesRepository = difficultiesRepository;
     }
 
     @Override
     @Transactional
     public Questions createQuestion(String text, Long categoryId, Long difficultyId) {
         Optional<Categories> categoryOpt = categoriesRepository.findById(categoryId);
-        Optional<Difficulties> difficultyOpt = difficultiesRepository.findById(difficultyId);
 
-        if(categoryOpt.isEmpty() || difficultyOpt.isEmpty())
-            throw new IllegalArgumentException("Category or Difficulties are empty");
+        if (categoryOpt.isEmpty())
+            throw new IllegalArgumentException("Category not found");
 
         Questions question = new Questions();
         question.setText(text);
         question.setCategory(categoryOpt.get());
-        question.setDifficulty(difficultyOpt.get());
+        question.setDifficultyId(difficultyId);
         return questionsRepository.save(question);
     }
 
     @Override
-    @Cacheable(value="questions", key="#id")
+    @Cacheable(value = "questions", key = "#id")
     public Optional<Questions> getQuestionById(Long id) {
         return questionsRepository.findById(id);
     }
 
     @Override
-    @Cacheable(value="questions", key="'all'")
-    public List<Questions> getAllQuestions(){
+    @Cacheable(value = "questions", key = "'all'")
+    public List<Questions> getAllQuestions() {
         return questionsRepository.findAll();
-    }
-
-    @Override
-    @Cacheable(value="questions", key="'page' + #pageable.pageNumber")
-    public Page<Questions> getQuestionsPage(Pageable pageable) {
-        return questionsRepository.findAll(pageable);
     }
 
     @Override
     @Transactional
     public Questions updateQuestion(Long id, String text, Long categoryId, Long difficultyId) {
         Optional<Questions> questionOpt = questionsRepository.findById(id);
-        if(questionOpt.isEmpty())
+        if (questionOpt.isEmpty())
             throw new IllegalArgumentException("Question does not exist");
 
         Optional<Categories> categoryOpt = categoriesRepository.findById(categoryId);
-        Optional<Difficulties> difficultyOpt = difficultiesRepository.findById(difficultyId);
-        if(categoryOpt.isEmpty() || difficultyOpt.isEmpty())
-            throw new IllegalArgumentException("Category or Difficulties not found");
+        if (categoryOpt.isEmpty())
+            throw new IllegalArgumentException("Category not found");
 
         Questions question = questionOpt.get();
         question.setText(text);
         question.setCategory(categoryOpt.get());
-        question.setDifficulty(difficultyOpt.get());
+        question.setDifficultyId(difficultyId);
 
         return questionsRepository.save(question);
     }
@@ -94,57 +79,41 @@ public class QuestionsServiceImpl implements QuestionsService {
     }
 
     @Override
-    @Cacheable(value="questions", key="'category' + #categoryId")
-    public List<Questions> getQuestionsByCategory(Long categoryId) {
-        Optional<Categories> categoryOpt = categoriesRepository.findById(categoryId);
-        return categoryOpt.map(questionsRepository::findByCategory).orElse(Collections.emptyList());
-    }
-
-    @Override
-    @Cacheable(value="questions", key="'difficulty' + #difficultyId")
-    public List<Questions> getQuestionsByDifficulty(Long difficultyId) {
-        Optional<Difficulties> difficultyOpt = difficultiesRepository.findById(difficultyId);
-        return difficultyOpt.map(questionsRepository::findByDifficulty).orElse(Collections.emptyList());
-    }
-
-    @Override
-    @Cacheable(value="questions", key="'category' + #categoryId + 'difficulty' + #difficultyId")
-    public List<Questions> getQuestionsByCategoryAndDifficulty(Long categoryId, Long difficultyId) {
-        Optional<Categories> categoryOpt = categoriesRepository.findById(categoryId);
-        Optional<Difficulties> difficultyOpt = difficultiesRepository.findById(difficultyId);
-        if(categoryOpt.isEmpty() || difficultyOpt.isEmpty())
+    @Cacheable(value = "questions", key = "'categories' + #categoryIds")
+    public List<Questions> getQuestionsByCategories(List<Long> categoryIds) {
+        List<Categories> categories = categoriesRepository.findAllById(categoryIds);
+        if (categories.isEmpty()) {
             return Collections.emptyList();
-        return questionsRepository.findByCategoryAndDifficulty(categoryOpt.get(), difficultyOpt.get());
+        }
+        return questionsRepository.findByCategoryIn(categories);
     }
 
     @Override
-    @Cacheable(value="questions", key="'search' + #searchTerm")
-    public List<Questions> searchQuestions(String searchTerm) {
-        return questionsRepository.findByTextContainingIgnoreCase(searchTerm);
+    @Cacheable(value = "questions", key = "'difficulty' + #difficultyId")
+    public List<Questions> getQuestionsByDifficulty(Long difficultyId) {
+        return questionsRepository.findByDifficultyId(difficultyId);
     }
 
     @Override
-    @Cacheable(value="questions", key="'category' + #categoryId")
-    public long countQuestionsByCategory(Long categoryId){
+    @Cacheable(value = "questions", key = "'categories' + #categoryIds + 'difficulty' + #difficultyId")
+    public List<Questions> getQuestionsByCategoriesAndDifficulty(List<Long> categoryIds, Long difficultyId) {
+        List<Categories> categories = categoriesRepository.findAllById(categoryIds);
+        if (categories.isEmpty()) {
+            return Collections.emptyList();
+        }
+        return questionsRepository.findByCategoryInAndDifficultyId(categories, difficultyId);
+    }
+
+    @Override
+    @Cacheable(value = "questions", key = "'category' + #categoryId")
+    public long countQuestionsByCategory(Long categoryId) {
         Optional<Categories> categoryOpt = categoriesRepository.findById(categoryId);
         return categoryOpt.map(questionsRepository::countByCategory).orElse(0L);
     }
 
     @Override
-    @Cacheable(value="questions", key="'difficulty' + #difficultyId")
-    public long countQuestionsByDifficulty(Long difficultyId){
-        Optional<Difficulties> difficultyOpt = difficultiesRepository.findById(difficultyId);
-        return difficultyOpt.map(questionsRepository::countByDifficulty).orElse(0L);
-    }
-
-    @Override
-    @Cacheable(value="questions", key="'category' + #categoryId + 'difficulty' + #difficultyId")
-    public List<Questions> getRandomQuestions(Long categoryId, Long difficultyId, int count) {
-        Optional<Categories> categoryOpt = categoriesRepository.findById(categoryId);
-        Optional<Difficulties> difficultyOpt = difficultiesRepository.findById(difficultyId);
-
-        if(categoryOpt.isPresent() || difficultyOpt.isPresent())
-            return questionsRepository.findRandomQuestions(categoryOpt.get(), difficultyOpt.get(), count);
-        return Collections.emptyList();
+    @Cacheable(value = "questions", key = "'difficulty' + #difficultyId")
+    public long countQuestionsByDifficulty(Long difficultyId) {
+        return questionsRepository.countByDifficultyId(difficultyId);
     }
 }

@@ -10,5 +10,4 @@ import java.util.List;
 
 public interface AnswersRepository extends JpaRepository<Answers, Long> {
     List<Answers> findByQuestionId(Long questionId);
-    List<Answers> findByIsCorrect(Boolean isCorrect);
 }

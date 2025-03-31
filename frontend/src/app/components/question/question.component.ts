@@ -1,9 +1,4 @@
-import {
-  Component,
-  effect,
-  input,
-  output,
-} from '@angular/core';
+import { Component, effect, input, output } from '@angular/core';
 import { Subscription, interval } from 'rxjs';
 import { Question } from '../../models/question';
 import { MatIconModule } from '@angular/material/icon';

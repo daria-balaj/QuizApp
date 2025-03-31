@@ -16,7 +16,4 @@ public class Categories {
 
     @Column(name = "name", unique = true, nullable = false, length = 100)
     private String name;
-
-    
-    
 }

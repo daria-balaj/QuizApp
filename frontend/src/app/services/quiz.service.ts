@@ -1,9 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Question } from '../models/question';
 import { Category } from '../models/category';
 import { Answer } from '../models/answer';
-import { Difficulties } from '../enums/difficulty';
+import { Difficulty } from '../enums/difficulty';
 
 @Injectable({
   providedIn: 'root',
@@ -15,12 +15,12 @@ export class QuizService {
   quizSettings: {
     mode: string;
     categories: Category[];
-    difficulty: Difficulties;
+    difficulty: Difficulty;
     questionCount: number;
   } = {
     mode: 'single',
     categories: [],
-    difficulty: Difficulties.EASY,
+    difficulty: Difficulty.EASY,
     questionCount: 0,
   };
 
@@ -31,7 +31,7 @@ export class QuizService {
   setQuizSettings(
     mode: string,
     categories: Category[],
-    difficulty: Difficulties,
+    difficulty: Difficulty,
     count: number
   ) {
     this.quizSettings = {
@@ -50,8 +50,20 @@ export class QuizService {
     return this.httpClient.get<Category[]>(this.baseUrl + 'categories');
   }
 
-  getQuestions() {
-    return this.httpClient.get<Question[]>(this.baseUrl + 'questions');
+  getQuestions(categoryIds: number[], difficultyId?: number) {
+    let params = new HttpParams();
+
+    categoryIds.forEach((id) => {
+      params = params.append('categoryId', id);
+    });
+
+    if (difficultyId !== undefined) {
+      params = params.set('difficultyId', difficultyId);
+    }
+
+    return this.httpClient.get<Question[]>(this.baseUrl + 'questions', {
+      params,
+    });
   }
 
   getAnswersByQuestionId(id: number) {

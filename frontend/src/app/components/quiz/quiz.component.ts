@@ -22,20 +22,22 @@ export class QuizComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const selectedCategories = this.quizService.getQuizSettings().categories;
+    const selectedCategories = this.quizService
+      .getQuizSettings()
+      .categories.map((c) => c.id);
     const selectedDifficulty = this.quizService.getQuizSettings().difficulty;
 
-    this.quizService.getQuestions().subscribe((allQuestions) => {
-      this.questions = allQuestions.filter((q) =>
-        selectedCategories.find((c) => c.id === q.category.id) && q.difficulty.id === selectedDifficulty
-      );
+    this.quizService
+      .getQuestions(selectedCategories, selectedDifficulty)
+      .subscribe((questions) => {
+        this.questions = questions;
 
-      if (this.questions.length > 0) {
-        this.getCurrentAnswers();
-      } else {
-        this.router.navigate(['/']);
-      }
-    });
+        if (this.questions.length > 0) {
+          this.getCurrentAnswers();
+        } else {
+          this.router.navigate(['/']);
+        }
+      });
   }
 
   getCurrentAnswers() {

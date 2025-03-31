@@ -28,16 +28,15 @@ public class QuestionsController {
 
     @GetMapping
     public ResponseEntity<List<Questions>> getAllQuestions(
-            @RequestParam(required = false) Long categoryId,
-            @RequestParam(required = false) Long difficultyId,
-            @RequestParam(required = false) String searchTerm
-            ) {
+            @RequestParam(required = false) List<Long> categoryId,
+            @RequestParam(required = false) Long difficultyId
+    ) {
         List<Questions> questions;
 
-        if(categoryId != null && difficultyId != null) {
-            questions = questionsService.getQuestionsByCategoryAndDifficulty(categoryId, difficultyId);
-        } else if (categoryId != null) {
-            questions = questionsService.getQuestionsByCategory(categoryId);
+        if (categoryId != null && !categoryId.isEmpty() && difficultyId != null) {
+            questions = questionsService.getQuestionsByCategoriesAndDifficulty(categoryId, difficultyId);
+        } else if (categoryId != null && !categoryId.isEmpty()) {
+            questions = questionsService.getQuestionsByCategories(categoryId);
         } else if (difficultyId != null) {
             questions = questionsService.getQuestionsByDifficulty(difficultyId);
         } else {
@@ -45,18 +44,6 @@ public class QuestionsController {
         }
 
         return ResponseEntity.ok(questions);
-
-    }
-
-    @GetMapping("/page")
-    public ResponseEntity<Page<Questions>> getQuestionsPage(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size,
-            @RequestParam(defaultValue = "id") String sort
-    ) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by(sort));
-        Page<Questions> questionsPage = questionsService.getQuestionsPage(pageable);
-        return ResponseEntity.ok(questionsPage);
     }
 
     @GetMapping("/{id}")
@@ -64,20 +51,6 @@ public class QuestionsController {
         Optional<Questions> question = questionsService.getQuestionById(id);
         return question.map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
-    }
-
-    @GetMapping("/random")
-    public ResponseEntity<List<Questions>> getRandomQuestions (
-            @RequestParam Long categoryId,
-            @RequestParam Long difficultyId,
-            @RequestParam(defaultValue = "10") int count
-    ) {
-        List<Questions> questions = questionsService.getRandomQuestions(categoryId, difficultyId, count);
-
-        if(questions.isEmpty())
-            return ResponseEntity.noContent().build();
-
-        return ResponseEntity.ok(questions);
     }
 
     @GetMapping("/count/category/{categoryId}")
