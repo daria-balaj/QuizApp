@@ -24,8 +24,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatSelectModule,
     MatInputModule,
     MatFormFieldModule,
-    ReactiveFormsModule,
-    RouterLink
+    ReactiveFormsModule
   ],
   templateUrl: './nav.component.html',
   styleUrl: './nav.component.css'
@@ -49,7 +48,6 @@ export class NavComponent {
       this.form.value.email!,
       this.form.value.password!
     ).subscribe(result => {
-        // this.result = result;
         console.log(result);
         if (result === true) {
           this.errorMessage = "";

@@ -23,7 +23,7 @@ interface ConfettiPiece {
   styleUrl: './singleplayer-results.component.css'
 })
 export class SingleplayerResultsComponent {
-  constructor(private quizService: QuizService, private elementRef: ElementRef) {}
+  constructor(private readonly quizService: QuizService, private readonly elementRef: ElementRef) {}
 
   @Input() correctAnswers: number = 12;
   @Input() score: number = 84;
@@ -31,9 +31,9 @@ export class SingleplayerResultsComponent {
   @ViewChild('confettiCanvas', { static: true }) confettiCanvas!: ElementRef<HTMLCanvasElement>;
 
   private ctx!: CanvasRenderingContext2D;
-  private confetti: Array<ConfettiPiece> = [];
+  private readonly confetti: Array<ConfettiPiece> = [];
   private animationId: number = 0;
-  private colors: string[] = [
+  private readonly colors: string[] = [
     '#f94144', '#f3722c', '#f8961e', 
     '#f9c74f', '#90be6d', '#43aa8b', 
     '#577590', '#9b5de5', '#00bbf9'
@@ -85,28 +85,23 @@ export class SingleplayerResultsComponent {
     this.ctx.clearRect(0, 0, canvas.width, canvas.height);
     
     let stillActive = false;
-    for (let i = 0; i < this.confetti.length; i++) {
-      const c = this.confetti[i];
-      
+    for (const c of this.confetti) {
       c.x += Math.sin(c.y * c.swingSpeed) * c.swingRange;
-      
       c.y += c.speed;
-      
       c.rotation += c.rotationSpeed;
-      
+    
       this.ctx.save();
       this.ctx.translate(c.x, c.y);
       this.ctx.rotate(c.rotation * Math.PI / 180);
-      
       this.ctx.fillStyle = c.color;
       this.ctx.fillRect(-c.size / 2, -c.size / 2, c.size, c.size);
-      
       this.ctx.restore();
-      
+    
       if (c.y < canvas.height + c.size) {
         stillActive = true;
       }
     }
+    
     
     if (stillActive) {
       this.animationId = requestAnimationFrame(() => this.animateConfetti());

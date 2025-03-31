@@ -9,7 +9,7 @@ import { User } from '../models/user';
 })
 export class AuthenticationService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private readonly httpClient: HttpClient) { }
 
   currentUser = new BehaviorSubject<User | null>(null);
 
@@ -37,7 +37,6 @@ export class AuthenticationService {
       map((response: any) => {
         console.log(response);
         if (response) {
-          // localStorage.setItem("token", response.token);
           this.token.next(response.token);
           this.currentUser.next(response);
           return true;
