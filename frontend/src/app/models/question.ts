@@ -1,7 +1,9 @@
+import { Category } from "./category";
+import { Difficulty } from "./difficulty";
+
 export interface Question {
-    category: string;
-    difficulty: string;
+    id: number;
     text: string;
-    correct_answer: string;
-    options: string[];
+    category: Category;
+    difficulty: Difficulty;
 }

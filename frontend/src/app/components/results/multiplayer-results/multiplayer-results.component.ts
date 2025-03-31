@@ -1,9 +1,6 @@
 import { Component } from '@angular/core';
-import { NavComponent } from '../../nav/nav.component';
-import { User } from '../../../models/user';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { QuizService } from '../../../services/quiz.service';
 
 interface Player {
   id: number;
@@ -19,8 +16,7 @@ interface Player {
 @Component({
   selector: 'app-multiplayer-results',
   imports: [
-    CommonModule,
-    NavComponent
+    CommonModule
   ],
   templateUrl: './multiplayer-results.component.html',
   styleUrl: './multiplayer-results.component.css'
@@ -33,7 +29,7 @@ export class MultiplayerResultsComponent {
   totalPlayers: number = 8;
   totalTime: string = '4:32';
   
-  constructor(private router: Router) { }
+  constructor(private readonly router: Router) { }
 
   ngOnInit(): void {
     this.players = [

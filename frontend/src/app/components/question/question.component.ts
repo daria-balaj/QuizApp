@@ -1,36 +1,44 @@
-import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  effect,
+  input,
+  output,
+} from '@angular/core';
 import { Subscription, interval } from 'rxjs';
 import { Question } from '../../models/question';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
+import { Answer } from '../../models/answer';
 
 @Component({
   selector: 'app-question',
-  imports: [
-    CommonModule,
-    MatIconModule
-  ],
+  imports: [CommonModule, MatIconModule],
   templateUrl: './question.component.html',
-  styleUrl: './question.component.css'
+  styleUrl: './question.component.css',
 })
-export class QuestionComponent implements OnChanges {
-  @Input() question: Question | undefined;
-  @Input() index!: number;
-  @Input() totalQuestions!: number;
-  answer: number | undefined;
-  timePerQuestion = 30;
-  options: string[] = [];
+export class QuestionComponent {
+  question = input.required<Question>();
+  answers = input.required<Answer[]>();
 
-  selectedAnswer: string | null = null;
+  index = input.required<number>();
+  totalQuestions = input.required<number>();
+  timePerQuestion = 30;
+
+  selectedAnswer: Answer | null = null;
   timeRemaining: number = this.timePerQuestion;
   timerSubscription: Subscription = new Subscription();
 
-  @Output() answerSelected = new EventEmitter<string>();
-  @Output() next = new EventEmitter<void>();
-  @Output() finish = new EventEmitter<void>();
+  answerSelected = output<Answer>();
+  next = output<void>();
+  finish = output<void>();
 
-  ngOnChanges(): void {
-    this.startTimer();
+  constructor() {
+    effect(() => {
+      const currentQuestion = this.question();
+      if (currentQuestion) {
+        this.startTimer();
+      }
+    });
   }
 
   ngOnDestroy(): void {
@@ -41,10 +49,10 @@ export class QuestionComponent implements OnChanges {
 
   startTimer(): void {
     this.timeRemaining = this.timePerQuestion;
-    
+
     this.timerSubscription = interval(1000).subscribe(() => {
       this.timeRemaining--;
-      
+
       if (this.timeRemaining <= 0) {
         this.timerSubscription.unsubscribe();
         this.timeUp();
@@ -52,7 +60,7 @@ export class QuestionComponent implements OnChanges {
     });
   }
 
-  selectOption(option: string): void {
+  selectOption(option: Answer): void {
     this.selectedAnswer = option;
     this.answerSelected.emit(option);
     this.nextQuestion(); //delete this line after testing
@@ -66,9 +74,9 @@ export class QuestionComponent implements OnChanges {
   }
 
   timeUp(): void {
-    // auto-select an answer or just move to next question
+    // auto-select the first answer and moves to next question
     if (!this.selectedAnswer) {
-      this.answerSelected.emit('');
+      this.answerSelected.emit(this.answers()[0]);
     }
     this.next.emit();
   }
@@ -78,5 +86,4 @@ export class QuestionComponent implements OnChanges {
     const secs = seconds % 60;
     return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
   }
-
 }

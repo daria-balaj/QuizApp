@@ -1,48 +1,62 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Question } from '../models/question';
-import { environment } from '../../environments/environment.development';
+import { Category } from '../models/category';
+import { Answer } from '../models/answer';
+import { Difficulties } from '../enums/difficulty';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class QuizService {
+  baseUrl = 'http://localhost:8080/api/';
+  constructor(private readonly httpClient: HttpClient) {}
 
-  constructor(private httpClient: HttpClient) { }
-
-  quizSettings: { mode: string, categories: string[], difficulty: string, questionCount: number } = {
+  quizSettings: {
+    mode: string;
+    categories: Category[];
+    difficulty: Difficulties;
+    questionCount: number;
+  } = {
     mode: 'single',
     categories: [],
-    difficulty: '',
-    questionCount: 0
-  }
+    difficulty: Difficulties.EASY,
+    questionCount: 0,
+  };
 
   getQuizSettings() {
     return this.quizSettings;
   }
 
- setQuizSettings(mode: string, categories: string[], difficulty: string, count: number ) {
+  setQuizSettings(
+    mode: string,
+    categories: Category[],
+    difficulty: Difficulties,
+    count: number
+  ) {
     this.quizSettings = {
       mode: mode,
       categories: categories,
       difficulty: difficulty,
-      questionCount: count
-    }
- } 
+      questionCount: count,
+    };
+  }
 
- getMode() : string {
-  return this.quizSettings.mode;
- }
+  getMode(): string {
+    return this.quizSettings.mode;
+  }
 
   getCategories() {
-    return this.httpClient.get<string[]>('/api/categories');
+    return this.httpClient.get<Category[]>(this.baseUrl + 'categories');
   }
 
   getQuestions() {
-    return this.httpClient.get<Question[]>('/api/get-question-set');
+    return this.httpClient.get<Question[]>(this.baseUrl + 'questions');
   }
 
-  pickOption() {
-    // return this.httpClient.post<string>(`${environment.quizApiUrl}/pick-option`)
+  getAnswersByQuestionId(id: number) {
+    return this.httpClient.get<Answer[]>(
+      this.baseUrl + 'answers/question/' + id
+    );
   }
 }

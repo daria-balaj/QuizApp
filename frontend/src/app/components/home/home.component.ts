@@ -5,52 +5,57 @@ import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { QuizService } from '../../services/quiz.service';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
+import { Category } from '../../models/category';
+import { Difficulties } from '../../enums/difficulty';
 
 @Component({
   selector: 'app-home',
+  standalone: true,
   imports: [
     CommonModule,
     NavComponent,
     MatButtonModule,
     FormsModule,
-    MatIconModule
-],
+    MatIconModule,
+  ],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrl: './home.component.css',
 })
 export class HomeComponent implements OnInit {
-  
-  categories = {
-    history: false,
-    science: false,
-    geography: false,
-    sports: false,
-    movies: false,
-    music: false
-  };
+  categories: Category[] = [];
 
-  selectedCategories: string[] = [];
+  selectedCategories: Category[] = [];
 
-  difficulty: string = 'easy';
+  difficulty: Difficulties = Difficulties.EASY;
+
+  Difficulties = Difficulties;
 
   questionCount: number = 10;
 
   mode = 'single';
 
-  constructor(private quizService: QuizService, private router: Router) {}
+  constructor(
+    private readonly quizService: QuizService,
+    private readonly router: Router
+  ) {}
 
   ngOnInit(): void {
-    // this.quizService.getCategories().subscribe(categories => {
-    //   this.categories = categories;
-    // });
+    this.quizService.getCategories().subscribe((categories) => {
+      this.categories = categories;
+    });
   }
 
-  updateCategories(): void {
-    this.selectedCategories = Object.keys(this.categories).filter(category => this.categories[category as keyof typeof this.categories]);
+  toggleCategorySelection(category: Category): void {
+    const index = this.selectedCategories.findIndex(c => c.id === category.id);
+    if (index === -1) {
+      this.selectedCategories.push(category);
+    } else {
+      this.selectedCategories.splice(index, 1);
+    }
   }
 
-  updateDifficulty(level: string): void {
+  updateDifficulty(level: Difficulties): void {
     this.difficulty = level;
   }
 
@@ -60,11 +65,10 @@ export class HomeComponent implements OnInit {
 
   isCategorySelected(): boolean {
     return this.selectedCategories.length > 0;
-    // return Object.values(this.categories).some(value => value === true);
   }
-  
+
   updateGameMode(mode: string = 'single'): void {
-    this.mode = this.mode = mode;
+    this.mode = mode;
   }
 
   startQuiz(): void {
@@ -74,8 +78,12 @@ export class HomeComponent implements OnInit {
         this.selectedCategories,
         this.difficulty,
         this.questionCount
-      )
+      );
       this.router.navigate(['/quiz']);
     }
+  }
+
+  isCategoryChecked(category: Category): boolean {
+    return this.selectedCategories.some(c => c.id === category.id);
   }
 }

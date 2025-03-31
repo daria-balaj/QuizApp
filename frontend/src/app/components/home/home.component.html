@@ -1,108 +1,151 @@
 <app-nav></app-nav>
 <div class="component w-screen">
-    <div class="quiz-app">        
-        <div class="content-area">
-          <section class="categories-section">
-            <h2 class="section-title">Choose Your Mode</h2>
-            <div class="mode-selector">
-              <div class="mode-option">
-                <input type="radio" id="singlePlayer" name="mode" value="single" [(ngModel)]="mode" (change)="updateGameMode('single')">
-                <label for="singlePlayer">
-                  <mat-icon>person</mat-icon>
-                  Single Player
-                </label>
-              </div>
-              <div class="mode-option">
-                <input type="radio" id="multiPlayer" name="mode" value="multi" [(ngModel)]="mode" (change)="updateGameMode('multi')">
-                <label for="multiPlayer">
-                  <mat-icon>group</mat-icon>
-                  Multiplayer
-                </label>
-              </div>
-            </div>
-          <!-- </section> -->
-          <!-- <section class="categories-section"> -->
-            <h2 class="section-title">Choose Your Categories</h2>
-                <p class="note">Please select at least one category</p>
-            <div class="category-grid">
-              <div class="category-item">
-                <input type="checkbox" id="history" name="category[]" value="history" [(ngModel)]="categories.history" (change)="updateCategories()">
-                <label for="history">History</label>
-              </div>
-              <div class="category-item">
-                <input type="checkbox" id="science" name="category[]" value="science" [(ngModel)]="categories.science" (change)="updateCategories()">
-                <label for="science">Science</label>
-              </div>
-              <div class="category-item">
-                <input type="checkbox" id="geography" name="category[]" value="geography" [(ngModel)]="categories.geography" (change)="updateCategories()">
-                <label for="geography">Geography</label>
-              </div>
-              <div class="category-item">
-                <input type="checkbox" id="sports" name="category[]" value="sports" [(ngModel)]="categories.sports" (change)="updateCategories()">
-                <label for="sports">Sports</label>
-              </div>
-              <div class="category-item">
-                <input type="checkbox" id="movies" name="category[]" value="movies" [(ngModel)]="categories.movies" (change)="updateCategories()">
-                <label for="movies">Movies</label>
-              </div>
-              <div class="category-item">
-                <input type="checkbox" id="music" name="category[]" value="music" [(ngModel)]="categories.music" (change)="updateCategories()">
-                <label for="music">Music</label>
-              </div>
-            </div>
-          </section>
-          
-          <section class="settings-section">
-            <div class="difficulty-selector">
-              <h3 class="section-title">Difficulty Level</h3>
-              <div class="difficulty-options">
-                <div class="difficulty-option">
-                  <input type="radio" id="easy" name="difficulty" value="easy" [(ngModel)]="difficulty" (change)="updateDifficulty('easy')">
-                  <label for="easy">
-                    <div class="difficulty-meter">
-                      <div class="meter-bar"></div>
-                      <div class="meter-bar"></div>
-                      <div class="meter-bar"></div>
-                    </div>
-                    Easy
-                  </label>
-                </div>
-                <div class="difficulty-option">
-                  <input type="radio" id="medium" name="difficulty" value="medium" [(ngModel)]="difficulty" (change)="updateDifficulty('medium')">
-                  <label for="medium">
-                    <div class="difficulty-meter">
-                      <div class="meter-bar"></div>
-                      <div class="meter-bar"></div>
-                      <div class="meter-bar"></div>
-                    </div>
-                    Medium
-                  </label>
-                </div>
-                <div class="difficulty-option">
-                  <input type="radio" id="hard" name="difficulty" value="hard" [(ngModel)]="difficulty" (change)="updateDifficulty('hard')">
-                  <label for="hard">
-                    <div class="difficulty-meter">
-                      <div class="meter-bar"></div>
-                      <div class="meter-bar"></div>
-                      <div class="meter-bar"></div>
-                    </div>
-                    Hard
-                  </label>
-                </div>
-              </div>
-            </div>
-            
-            <div class="questions-count">
-              <h3 class="section-title">Number of Questions</h3>
-              <div class="slider-labels">
-                <span>5</span>
-                <span>25</span>
-              </div>
-              <input type="range" min="5" max="25" [(ngModel)]="questionCount" (input)="updateQuestionCount()" class="count-slider" id="questionCount">
-              <div class="count-display" id="countDisplay">{{ questionCount }} Questions</div>
-            </div>
-              <button class="start-btn" id="startBtn" [disabled]="!isCategorySelected()" (click)="startQuiz()">Start Quiz</button>
-          </section>
+  <div class="quiz-app">
+    <div class="content-area">
+      <section class="categories-section">
+        <h2 class="section-title">Choose Your Mode</h2>
+        <div class="mode-selector">
+          <div class="mode-option">
+            <input
+              type="radio"
+              id="singlePlayer"
+              name="mode"
+              value="single"
+              [(ngModel)]="mode"
+              (change)="updateGameMode('single')"
+            />
+            <label for="singlePlayer">
+              <mat-icon>person</mat-icon>
+              Single Player
+            </label>
+          </div>
+          <div class="mode-option">
+            <input
+              type="radio"
+              id="multiPlayer"
+              name="mode"
+              value="multi"
+              [(ngModel)]="mode"
+              (change)="updateGameMode('multi')"
+            />
+            <label for="multiPlayer">
+              <mat-icon>group</mat-icon>
+              Multiplayer
+            </label>
+          </div>
         </div>
+
+        <h2 class="section-title">Choose Your Categories</h2>
+        <p class="note">Please select at least one category</p>
+        <div class="category-grid">
+          @for(category of categories; track category.id) {
+            <div class="category-item">
+              <input
+                type="checkbox"
+                [id]="'category-' + category.id"
+                [checked]="isCategoryChecked(category)"
+                (change)="toggleCategorySelection(category)"
+              />
+              <label [for]="'category-' + category.id">
+                {{ category.name }}
+              </label>
+            </div>
+          }
+          
+        </div>
+        
+        
+      </section>
+
+      <section class="settings-section">
+        <div class="difficulty-selector">
+          <h3 class="section-title">Difficulty Level</h3>
+          <div class="difficulty-options">
+            <div class="difficulty-option">
+              <input
+                type="radio"
+                id="easy"
+                name="difficulty"
+                value="easy"
+                [checked]="difficulty === Difficulties.EASY"
+                (change)="updateDifficulty(Difficulties.EASY)"
+              />
+              <label for="easy">
+                <div class="difficulty-meter">
+                  <div class="meter-bar"></div>
+                  <div class="meter-bar"></div>
+                  <div class="meter-bar"></div>
+                </div>
+                Easy
+              </label>
+            </div>
+            <div class="difficulty-option">
+              <input
+                type="radio"
+                id="medium"
+                name="difficulty"
+                value="medium"
+                [checked]="difficulty === Difficulties.MEDIUM"
+                (change)="updateDifficulty(Difficulties.MEDIUM)"
+              />
+              <label for="medium">
+                <div class="difficulty-meter">
+                  <div class="meter-bar"></div>
+                  <div class="meter-bar"></div>
+                  <div class="meter-bar"></div>
+                </div>
+                Medium
+              </label>
+            </div>
+            <div class="difficulty-option">
+              <input
+                type="radio"
+                id="hard"
+                name="difficulty"
+                value="hard"
+                [checked]="difficulty === Difficulties.HARD"
+                (change)="updateDifficulty(Difficulties.HARD)"
+              />
+              <label for="hard">
+                <div class="difficulty-meter">
+                  <div class="meter-bar"></div>
+                  <div class="meter-bar"></div>
+                  <div class="meter-bar"></div>
+                </div>
+                Hard
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="questions-count">
+          <h3 class="section-title">Number of Questions</h3>
+          <div class="slider-labels">
+            <span>5</span>
+            <span>25</span>
+          </div>
+          <input
+            type="range"
+            min="5"
+            max="25"
+            [(ngModel)]="questionCount"
+            (input)="updateQuestionCount()"
+            class="count-slider"
+            id="questionCount"
+          />
+          <div class="count-display" id="countDisplay">
+            {{ questionCount }} Questions
+          </div>
+        </div>
+        <button
+          class="start-btn"
+          id="startBtn"
+          [disabled]="!isCategorySelected()"
+          (click)="startQuiz()"
+        >
+          Start Quiz
+        </button>
+      </section>
     </div>
+  </div>
 </div>
