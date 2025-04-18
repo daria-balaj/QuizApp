@@ -1,6 +1,6 @@
 package com.unitbv.quizz_app.service.impl;
 
-import com.unitbv.quizz_app.entity.Answers;
+import com.unitbv.quizz_app.entity.Answer;
 import com.unitbv.quizz_app.repository.AnswersRepository;
 import com.unitbv.quizz_app.service.AnswersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,29 +22,35 @@ public class AnswersServiceImpl implements AnswersService {
 
     @Override
     @Cacheable(value = "answers", key = "'all'")
-    public List<Answers> getAllAnswers() {
+    public List<Answer> getAllAnswers() {
         return answersRepository.findAll();
     }
 
     @Override
     @Cacheable(value = "answers", key = "#id")
-    public Optional<Answers> getAnswersById(Long id) {
+    public Optional<Answer> getAnswersById(Long id) {
         return answersRepository.findById(id);
     }
 
     @Override
     @Cacheable(value = "answers", key = "#questionId")
-    public List<Answers> getAnswersByQuestionId(Long questionId) {
+    public List<Answer> getAnswersByQuestionId(Long questionId) {
         return answersRepository.findByQuestionId(questionId);
     }
 
     @Override
-    public Answers saveAnswer(Answers answer) {
+    public Long getCorrectAnswerId(Long questionId) {
+        Answer answer = answersRepository.findByQuestionIdAndIsCorrectTrue(questionId);
+        return answer.getId();
+    }
+
+    @Override
+    public Answer saveAnswer(Answer answer) {
         return answersRepository.save(answer);
     }
 
     @Override
-    public Answers updateAnswer(Answers answer) {
+    public Answer updateAnswer(Answer answer) {
         return answersRepository.save(answer);
     }
 

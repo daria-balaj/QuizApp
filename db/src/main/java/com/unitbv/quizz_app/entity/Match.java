@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "matches")
 @Data
-public class Matches {
+public class Match {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,7 +16,7 @@ public class Matches {
 
     @ManyToOne
     @JoinColumn(name="category_id", nullable = false)
-    private Categories category;
+    private Category category;
 
     @Column(name="difficulty_id", nullable = false)
     private Long difficultyId;

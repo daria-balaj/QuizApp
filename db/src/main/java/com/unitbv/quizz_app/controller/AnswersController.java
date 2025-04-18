@@ -1,9 +1,8 @@
 package com.unitbv.quizz_app.controller;
 
-import com.unitbv.quizz_app.entity.Answers;
+import com.unitbv.quizz_app.entity.Answer;
 import com.unitbv.quizz_app.service.AnswersService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,21 +20,27 @@ public class AnswersController {
     }
 
     @GetMapping
-    public List<Answers> getAllAnswers() {
+    public List<Answer> getAllAnswers() {
         return answersService.getAllAnswers();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Answers> getAnswerById(@PathVariable Long id) {
+    public ResponseEntity<Answer> getAnswerById(@PathVariable Long id) {
         return answersService.getAnswersById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/question/{questionId}")
-    public ResponseEntity<List<Answers>> getAnswersByQuestionId(@PathVariable Long questionId) {
-        List<Answers> answers = answersService.getAnswersByQuestionId(questionId);
+    public ResponseEntity<List<Answer>> getAnswersByQuestionId(@PathVariable Long questionId) {
+        List<Answer> answers = answersService.getAnswersByQuestionId(questionId);
         return ResponseEntity.ok(answers);
+    }
+
+    @GetMapping("/question/{questionId}/correct-answer")
+    public ResponseEntity<Long> getCorrectAnswer(@PathVariable Long questionId) {
+        Long id = answersService.getCorrectAnswerId(questionId);
+        return ResponseEntity.ok(id);
     }
 /*
     @GetMapping("/correct")

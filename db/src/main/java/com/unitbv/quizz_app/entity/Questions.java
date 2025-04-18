@@ -18,8 +18,8 @@ public class Questions {
 
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
-    private Categories category;
+    private Category category;
 
-    @Column(name = "difficulty_id", nullable = false)
-    private Long difficultyId;
+    @Column(name = "difficulty", nullable = false)
+    private int difficulty;
 }

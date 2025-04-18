@@ -1,7 +1,5 @@
 package app.quiz_service.entity;
 
-import lombok.Data;
-
 import java.io.Serial;
 
 
@@ -9,7 +7,7 @@ public class MatchQuestions {
 
     private MatchQuestionId id;
     private Matches match;
-    private Questions question;
+    private Question question;
     private int questionOrder;
 
     public static class MatchQuestionId implements java.io.Serializable {

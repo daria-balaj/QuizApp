@@ -14,7 +14,6 @@ export function tokenInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn)
   return next(clonedRequest).pipe(
     tap((event: HttpEvent<any>) => {
       if (event.type === HttpEventType.Response) {
-        console.log('Incoming HTTP response', event);
       }
     })
   );

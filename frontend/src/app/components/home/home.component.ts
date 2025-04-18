@@ -25,7 +25,7 @@ import { Difficulty } from '../../enums/difficulty';
 export class HomeComponent implements OnInit {
   categories: Category[] = [];
 
-  selectedCategories: Category[] = [];
+  selectedCategories: number[] = [];
 
   difficulty: Difficulty = Difficulty.EASY;
 
@@ -47,9 +47,9 @@ export class HomeComponent implements OnInit {
   }
 
   toggleCategorySelection(category: Category): void {
-    const index = this.selectedCategories.findIndex(c => c.id === category.id);
+    const index = this.selectedCategories.findIndex(id => id === category.id);
     if (index === -1) {
-      this.selectedCategories.push(category);
+      this.selectedCategories.push(category.id);
     } else {
       this.selectedCategories.splice(index, 1);
     }
@@ -84,6 +84,6 @@ export class HomeComponent implements OnInit {
   }
 
   isCategoryChecked(category: Category): boolean {
-    return this.selectedCategories.some(c => c.id === category.id);
+    return this.selectedCategories.some(id => id === category.id);
   }
 }

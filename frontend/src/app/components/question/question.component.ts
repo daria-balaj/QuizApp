@@ -4,6 +4,7 @@ import { Question } from '../../models/question';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { Answer } from '../../models/answer';
+import { QuizService } from '../../services/quiz.service';
 
 @Component({
   selector: 'app-question',
@@ -27,10 +28,13 @@ export class QuestionComponent {
   next = output<void>();
   finish = output<void>();
 
-  constructor() {
+  correctAnswerId: number | null = null;
+
+  constructor(private quizService: QuizService) {
     effect(() => {
       const currentQuestion = this.question();
       if (currentQuestion) {
+        this.selectedAnswer = null;
         this.startTimer();
       }
     });
@@ -56,9 +60,19 @@ export class QuestionComponent {
   }
 
   selectOption(option: Answer): void {
+    if (this.selectedAnswer) {
+      return; 
+    }
     this.selectedAnswer = option;
+
     this.answerSelected.emit(option);
-    this.nextQuestion(); //delete this line after testing
+
+    this.quizService.checkAnswer(this.question().id, this.selectedAnswer.id).subscribe((correctAnswerId) => {
+      this.correctAnswerId = correctAnswerId;
+      setTimeout(() => {
+        this.nextQuestion();
+      }, 2000); 
+    });
   }
 
   nextQuestion(): void {
@@ -69,16 +83,38 @@ export class QuestionComponent {
   }
 
   timeUp(): void {
-    // auto-select the first answer and moves to next question
-    if (!this.selectedAnswer) {
-      this.answerSelected.emit(this.answers()[0]);
-    }
-    this.next.emit();
+    this.quizService.getCorrectAnswer(this.question().id).subscribe((correctAnswerId) => {
+      this.correctAnswerId = correctAnswerId;
+      setTimeout(() => {
+        this.next.emit();
+      }, 2000);
+    });
   }
 
   formatTime(seconds: number): string {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+  }
+
+  getCorrectAnswerId() {
+    this.quizService.getCorrectAnswer(this.question().id).subscribe((correctAnswerId) => {
+      this.correctAnswerId = correctAnswerId;
+    });
+  }
+
+  getAnswerClass(answer: Answer): string {
+    if (this.selectedAnswer || (!this.selectedAnswer && this.timeRemaining <= 0)) {
+      if (!this.correctAnswerId)  {
+        this.getCorrectAnswerId();
+      }
+      if (this.selectedAnswer?.id === answer.id && this.selectedAnswer.id !== this.correctAnswerId) {
+        return 'wrong';
+      } 
+      else if (this.correctAnswerId === answer.id) {
+        return 'correct';
+      }
+    }
+    return '';
   }
 }

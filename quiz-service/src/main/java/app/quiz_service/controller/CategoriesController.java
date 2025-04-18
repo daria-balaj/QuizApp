@@ -1,61 +1,55 @@
 package app.quiz_service.controller;
 
-import app.quiz_service.entity.Categories;
-import app.quiz_service.service.CategoriesService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/categories")
 @CrossOrigin(origins = "http://localhost:4200")
 public class CategoriesController {
 
-    private final CategoriesService categoriesService;
-
-    public CategoriesController(CategoriesService categoriesService) {
-        this.categoriesService = categoriesService;
-    }
-
-
-
-    @GetMapping
-    public ResponseEntity<List<Categories>> getAllCategories(
-            @RequestParam(required = false) Boolean sorted,
-            @RequestParam(required = false) Boolean withQuestions
-    ) {
-        List<Categories> categories;
-        if(Boolean.TRUE.equals(withQuestions)) {
-            categories = categoriesService.getCategoriesWithQuestions();
-        } else if(Boolean.TRUE.equals(sorted)) {
-            categories = categoriesService.getAllCategoriesSorted();
-        } else {
-            categories = categoriesService.getAllCategories();
-        }
-        return ResponseEntity.ok(categories);
-    }
-
-    @GetMapping("/search")
-    public ResponseEntity<List<Categories>> searchCategories(@RequestParam String term) {
-        List<Categories> categories = categoriesService.searchCategories(term);
-        return ResponseEntity.ok(categories);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Categories> getCategoryById(@PathVariable Long id) {
-        Optional<Categories> category = categoriesService.getCategoryById(id);
-        return category.map(ResponseEntity :: ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
-    @GetMapping("/by-name/name")
-    public ResponseEntity<Categories> getCategoryByName(@RequestParam String name) {
-        Optional<Categories> category = categoriesService.getCategoryByName(name);
-        return category.map(ResponseEntity :: ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
-    }
+//    private final CategoriesService categoriesService;
+//
+//    public CategoriesController(CategoriesService categoriesService) {
+//        this.categoriesService = categoriesService;
+//    }
+//
+//
+//
+//    @GetMapping
+//    public ResponseEntity<List<Categories>> getAllCategories(
+//            @RequestParam(required = false) Boolean sorted,
+//            @RequestParam(required = false) Boolean withQuestions
+//    ) {
+//        List<Categories> categories;
+//        if(Boolean.TRUE.equals(withQuestions)) {
+//            categories = categoriesService.getCategoriesWithQuestions();
+//        } else if(Boolean.TRUE.equals(sorted)) {
+//            categories = categoriesService.getAllCategoriesSorted();
+//        } else {
+//            categories = categoriesService.getAllCategories();
+//        }
+//        return ResponseEntity.ok(categories);
+//    }
+//
+//    @GetMapping("/search")
+//    public ResponseEntity<List<Categories>> searchCategories(@RequestParam String term) {
+//        List<Categories> categories = categoriesService.searchCategories(term);
+//        return ResponseEntity.ok(categories);
+//    }
+//
+//    @GetMapping("/{id}")
+//    public ResponseEntity<Categories> getCategoryById(@PathVariable Long id) {
+//        Optional<Categories> category = categoriesService.getCategoryById(id);
+//        return category.map(ResponseEntity :: ok)
+//                .orElseGet(() -> ResponseEntity.notFound().build());
+//    }
+//
+//    @GetMapping("/by-name/name")
+//    public ResponseEntity<Categories> getCategoryByName(@RequestParam String name) {
+//        Optional<Categories> category = categoriesService.getCategoryByName(name);
+//        return category.map(ResponseEntity :: ok)
+//                .orElseGet(() -> ResponseEntity.notFound().build());
+//    }
 /*
     @PostMapping
     public ResponseEntity<Categories> createCategory(@RequestParam String name) {

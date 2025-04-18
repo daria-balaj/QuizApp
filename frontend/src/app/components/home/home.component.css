@@ -112,14 +112,13 @@ background: #e9dcf7;
     border-color: #e9dcf7;
     box-shadow: 0 0 15px rgba(233, 220, 247, 0.3);
     background: rgba(233, 220, 247, 0.15);
-    transform: translateY(-5px);
   }
   
   .mode-option input:checked + label mat-icon {
     opacity: 1;
   }
   
-  .mode-option label:hover {
+  .mode-option.disabled label:hover {
     background: rgba(255, 255, 255, 0.1);
     transform: translateY(-3px);
   }

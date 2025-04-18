@@ -1,14 +1,12 @@
 package app.quiz_service.entity;
 
-import lombok.Data;
-
 import java.time.LocalDateTime;
 
 public class Matches {
     
     private Long id;
 
-    private Categories category;
+    private Category category;
 
     private Difficulties difficulty;
 

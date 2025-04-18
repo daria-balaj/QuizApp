@@ -2,10 +2,10 @@ package app.quiz_service.entity;
 
 import lombok.Data;
 @Data
-public class Questions {
+public class Question {
 
     private Long id;
     private String text;
-    private Categories category;
-    private Difficulties difficulty;
+    private Category category;
+    private int difficulty;
 }

@@ -12,30 +12,30 @@ import java.util.List;
 @RequestMapping("/api/answers")
 @CrossOrigin(origins = "http://localhost:4200")
 public class AnswersController {
-    private final AnswersService answersService;
-
-    @Autowired
-    public AnswersController(AnswersService answersService) {
-        this.answersService = answersService;
-    }
-
-    @GetMapping
-    public List<Answers> getAllAnswers() {
-        return answersService.getAllAnswers();
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Answers> getAnswerById(@PathVariable Long id) {
-        return answersService.getAnswersById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-
-    @GetMapping("/question/{questionId}")
-    public ResponseEntity<List<Answers>> getAnswersByQuestionId(@PathVariable Long questionId) {
-        List<Answers> answers = answersService.getAnswersByQuestionId(questionId);
-        return ResponseEntity.ok(answers);
-    }
+//    private final AnswersService answersService;
+//
+//    @Autowired
+//    public AnswersController(AnswersService answersService) {
+//        this.answersService = answersService;
+//    }
+//
+//    @GetMapping
+//    public List<Answers> getAllAnswers() {
+//        return answersService.getAllAnswers();
+//    }
+//
+//    @GetMapping("/{id}")
+//    public ResponseEntity<Answers> getAnswerById(@PathVariable Long id) {
+//        return answersService.getAnswersById(id)
+//                .map(ResponseEntity::ok)
+//                .orElse(ResponseEntity.notFound().build());
+//    }
+//
+//    @GetMapping("/question/{questionId}")
+//    public ResponseEntity<List<Answers>> getAnswersByQuestionId(@PathVariable Long questionId) {
+//        List<Answers> answers = answersService.getAnswersByQuestionId(questionId);
+//        return ResponseEntity.ok(answers);
+//    }
 /*
     @GetMapping("/correct")
     public ResponseEntity<List<Answers>> getCorrectAnswers() {

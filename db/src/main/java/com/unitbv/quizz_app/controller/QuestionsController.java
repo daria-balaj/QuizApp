@@ -29,16 +29,16 @@ public class QuestionsController {
     @GetMapping
     public ResponseEntity<List<Questions>> getAllQuestions(
             @RequestParam(required = false) List<Long> categoryId,
-            @RequestParam(required = false) Long difficultyId
+            @RequestParam(required = false) int difficulty
     ) {
         List<Questions> questions;
 
-        if (categoryId != null && !categoryId.isEmpty() && difficultyId != null) {
-            questions = questionsService.getQuestionsByCategoriesAndDifficulty(categoryId, difficultyId);
+        if (categoryId != null && !categoryId.isEmpty() && difficulty >= 1 && difficulty <= 3) {
+            questions = questionsService.getQuestionsByCategoriesAndDifficulty(categoryId, difficulty);
         } else if (categoryId != null && !categoryId.isEmpty()) {
             questions = questionsService.getQuestionsByCategories(categoryId);
-        } else if (difficultyId != null) {
-            questions = questionsService.getQuestionsByDifficulty(difficultyId);
+        } else if (difficulty >= 1 && difficulty <= 3) {
+            questions = questionsService.getQuestionsByDifficulty(difficulty);
         } else {
             questions = questionsService.getAllQuestions();
         }
@@ -60,8 +60,8 @@ public class QuestionsController {
     }
 
     @GetMapping("/count/difficulty/{difficultyId}")
-    public ResponseEntity<Long> countQuestionsByDifficulty(@PathVariable Long difficultyId) {
-        long count = questionsService.countQuestionsByDifficulty(difficultyId);
+    public ResponseEntity<Long> countQuestionsByDifficulty(@PathVariable int difficulty) {
+        long count = questionsService.countQuestionsByDifficulty(difficulty);
         return ResponseEntity.ok(count);
     }
 
@@ -69,10 +69,10 @@ public class QuestionsController {
     public ResponseEntity<Questions> createQuestion(
             @RequestParam String text,
             @RequestParam Long categoryId,
-            @RequestParam Long difficultyId
+            @RequestParam int difficulty
     ) {
         try {
-            Questions question = questionsService.createQuestion(text, categoryId, difficultyId);
+            Questions question = questionsService.createQuestion(text, categoryId, difficulty);
             return ResponseEntity.status(HttpStatus.CREATED).body(question);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().build();

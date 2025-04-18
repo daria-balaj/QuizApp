@@ -11,16 +11,12 @@ CREATE TABLE categories (
     name VARCHAR(100) UNIQUE NOT NULL
 );
 
-CREATE TABLE difficulties (
-    difficulty_id SERIAL PRIMARY KEY,
-    level VARCHAR(50) UNIQUE NOT NULL
-);
 
 CREATE TABLE questions (
     question_id SERIAL PRIMARY KEY,
     text TEXT NOT NULL,
     category_id INT REFERENCES categories(category_id) ON DELETE CASCADE,
-    difficulty_id INT REFERENCES difficulties(difficulty_id) ON DELETE CASCADE
+    difficulty INT
 );
 
 CREATE TABLE answers (

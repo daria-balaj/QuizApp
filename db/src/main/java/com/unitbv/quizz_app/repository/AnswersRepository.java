@@ -1,13 +1,12 @@
 package com.unitbv.quizz_app.repository;
 
-import com.unitbv.quizz_app.entity.Answers;
-import com.unitbv.quizz_app.entity.Questions;
+import com.unitbv.quizz_app.entity.Answer;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 
-public interface AnswersRepository extends JpaRepository<Answers, Long> {
-    List<Answers> findByQuestionId(Long questionId);
+public interface AnswersRepository extends JpaRepository<Answer, Long> {
+    List<Answer> findByQuestionId(Long questionId);
+    Answer findByQuestionIdAndIsCorrectTrue(Long questionId);
 }

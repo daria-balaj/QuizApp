@@ -16,7 +16,7 @@ public class PlayerAnswers {
 
     @ManyToOne
     @JoinColumn(name = "match_id", nullable = false)
-    private Matches match;
+    private Match match;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -28,7 +28,7 @@ public class PlayerAnswers {
 
     @ManyToOne
     @JoinColumn(name = "chosen_answer_id", nullable = false)
-    private Answers chosenAnswer;
+    private Answer chosenAnswer;
     
     @Column(name = "answered_at", nullable = false, updatable = false)
     private LocalDateTime answeredAt = LocalDateTime.now();

@@ -4,6 +4,7 @@ import { Question } from '../models/question';
 import { Category } from '../models/category';
 import { Answer } from '../models/answer';
 import { Difficulty } from '../enums/difficulty';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +15,7 @@ export class QuizService {
 
   quizSettings: {
     mode: string;
-    categories: Category[];
+    categories: number[];
     difficulty: Difficulty;
     questionCount: number;
   } = {
@@ -30,7 +31,7 @@ export class QuizService {
 
   setQuizSettings(
     mode: string,
-    categories: Category[],
+    categories: number[],
     difficulty: Difficulty,
     count: number
   ) {
@@ -50,25 +51,42 @@ export class QuizService {
     return this.httpClient.get<Category[]>(this.baseUrl + 'categories');
   }
 
-  getQuestions(categoryIds: number[], difficultyId?: number) {
+  // getQuestions(categoryIds: number[], difficulty?: number) {
+  getQuestions({mode, categories: categoryIds, difficulty, questionCount}: {mode: string, categories: number[], difficulty?: number, questionCount: number}) {
     let params = new HttpParams();
+
+    //TODO: uncomment when multiplayer is implemented
+    // params = params.set('mode', mode);
 
     categoryIds.forEach((id) => {
       params = params.append('categoryId', id);
     });
 
-    if (difficultyId !== undefined) {
-      params = params.set('difficultyId', difficultyId);
+    if (difficulty !== undefined) {
+      params = params.set('difficulty', difficulty);
     }
 
-    return this.httpClient.get<Question[]>(this.baseUrl + 'questions', {
-      params,
-    });
+    if (questionCount) {
+      params = params.set('questionCount', questionCount);
+    }
+
+    // return this.httpClient.get<Question[]>(this.baseUrl + 'questions', {
+    //   params,
+    // });
+    return this.httpClient.get<Question[]>("http://localhost:8081/api/quiz", { params });
   }
 
   getAnswersByQuestionId(id: number) {
     return this.httpClient.get<Answer[]>(
       this.baseUrl + 'answers/question/' + id
     );
+  }
+
+  getCorrectAnswer(questionId: number) : Observable<number> {
+    return this.httpClient.get<number>("http://localhost:8081/api/quiz/correct-answer/" + questionId);
+  }
+
+  checkAnswer(questionId: number, answerId: number) : Observable<number> {
+    return this.httpClient.get<number>(`http://localhost:8081/api/quiz/check-answer/${questionId}/${answerId}`);
   }
 }

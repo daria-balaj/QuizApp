@@ -1,6 +1,6 @@
 package com.unitbv.quizz_app.service.impl;
 
-import com.unitbv.quizz_app.entity.Categories;
+import com.unitbv.quizz_app.entity.Category;
 import com.unitbv.quizz_app.repository.CategoriesRepository;
 import com.unitbv.quizz_app.service.CategoriesService;
 import org.springframework.stereotype.Service;
@@ -21,45 +21,45 @@ public class CategoriesServiceImpl implements  CategoriesService {
 
     @Override
     @Transactional
-    public Categories createCategory(String name) {
-        Categories category = new Categories();
+    public Category createCategory(String name) {
+        Category category = new Category();
         category.setName(name);
         return categoriesRepository.save(category);
     }
 
     @Override
     @Cacheable(value="categories", key="'all'")
-    public List<Categories> getAllCategories() {
+    public List<Category> getAllCategories() {
         return categoriesRepository.findAll();
     }
 
     @Override
     @Cacheable(value="categories", key="'sorted'")
-    public List<Categories> getAllCategoriesSorted() {
+    public List<Category> getAllCategoriesSorted() {
         return categoriesRepository.findAllByOrderByNameAsc();
     }
 
     @Override
     @Cacheable(value = "searchResults", key = "'categories:' + #searchTerm")
-    public List<Categories> searchCategories(String searchTerm) {
+    public List<Category> searchCategories(String searchTerm) {
         return categoriesRepository.findByNameContainingIgnoreCase(searchTerm);
     }
 
     @Override
     @Cacheable(value = "categories", key = "'withQuestions'")
-    public List<Categories> getCategoriesWithQuestions() {
+    public List<Category> getCategoriesWithQuestions() {
         return categoriesRepository.findCategoriesWithQuestions();
     }
 
     @Override
     @Cacheable(value = "categories", key = "#id")
-    public Optional<Categories> getCategoryById(Long id) {
+    public Optional<Category> getCategoryById(Long id) {
         return categoriesRepository.findById(id);
     }
 
     @Override
     @Cacheable(value = "categories", key = "#name")
-    public Optional<Categories> getCategoryByName(String name) {
+    public Optional<Category> getCategoryByName(String name) {
         return categoriesRepository.findByNameIgnoreCase(name);
     }
 
@@ -71,10 +71,10 @@ public class CategoriesServiceImpl implements  CategoriesService {
 
     @Override
     @Transactional
-    public Categories updateCategory(Long id, String name) {
-        Optional<Categories> optionalCategory = categoriesRepository.findById(id);
+    public Category updateCategory(Long id, String name) {
+        Optional<Category> optionalCategory = categoriesRepository.findById(id);
         if (optionalCategory.isPresent()) {
-            Categories category = optionalCategory.get();
+            Category category = optionalCategory.get();
             category.setName(name);
             return categoriesRepository.save(category);
         }

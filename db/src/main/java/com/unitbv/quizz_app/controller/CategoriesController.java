@@ -1,8 +1,7 @@
 package com.unitbv.quizz_app.controller;
 
-import com.unitbv.quizz_app.entity.Categories;
+import com.unitbv.quizz_app.entity.Category;
 import com.unitbv.quizz_app.service.CategoriesService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,11 +22,11 @@ public class CategoriesController {
 
 
     @GetMapping
-    public ResponseEntity<List<Categories>> getAllCategories(
+    public ResponseEntity<List<Category>> getAllCategories(
             @RequestParam(required = false) Boolean sorted,
             @RequestParam(required = false) Boolean withQuestions
     ) {
-        List<Categories> categories;
+        List<Category> categories;
         if(Boolean.TRUE.equals(withQuestions)) {
             categories = categoriesService.getCategoriesWithQuestions();
         } else if(Boolean.TRUE.equals(sorted)) {
@@ -39,21 +38,21 @@ public class CategoriesController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<Categories>> searchCategories(@RequestParam String term) {
-        List<Categories> categories = categoriesService.searchCategories(term);
+    public ResponseEntity<List<Category>> searchCategories(@RequestParam String term) {
+        List<Category> categories = categoriesService.searchCategories(term);
         return ResponseEntity.ok(categories);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Categories> getCategoryById(@PathVariable Long id) {
-        Optional<Categories> category = categoriesService.getCategoryById(id);
+    public ResponseEntity<Category> getCategoryById(@PathVariable Long id) {
+        Optional<Category> category = categoriesService.getCategoryById(id);
         return category.map(ResponseEntity :: ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping("/by-name/name")
-    public ResponseEntity<Categories> getCategoryByName(@RequestParam String name) {
-        Optional<Categories> category = categoriesService.getCategoryByName(name);
+    public ResponseEntity<Category> getCategoryByName(@RequestParam String name) {
+        Optional<Category> category = categoriesService.getCategoryByName(name);
         return category.map(ResponseEntity :: ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }

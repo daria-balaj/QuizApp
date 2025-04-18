@@ -9,18 +9,18 @@ import java.util.Optional;
 
 public interface QuestionsService {
     //CRUD operations
-    Questions createQuestion(String text, Long categoryId, Long difficultyId);
+    Questions createQuestion(String text, Long categoryId, int difficulty);
     Optional<Questions> getQuestionById(Long id);
     List<Questions> getAllQuestions();
-    Questions updateQuestion(Long id, String text, Long categoryId, Long difficultyId);
+    Questions updateQuestion(Long id, String text, Long categoryId, int difficulty);
     void deleteQuestion(Long id);
 
     //Filtering operations
     List<Questions> getQuestionsByCategories(List<Long> categoryIds);
-    List<Questions> getQuestionsByDifficulty(Long difficultyId);
-    List<Questions> getQuestionsByCategoriesAndDifficulty(List<Long> categoryIds, Long difficultyId);
+    List<Questions> getQuestionsByDifficulty(int difficulty);
+    List<Questions> getQuestionsByCategoriesAndDifficulty(List<Long> categoryIds, int difficulty);
 
     // Statistics operations
     long countQuestionsByCategory(Long categoryId);
-    long countQuestionsByDifficulty(Long difficultyId);
+    long countQuestionsByDifficulty(int difficulty);
 }

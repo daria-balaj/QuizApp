@@ -112,6 +112,30 @@
     background: rgba(233, 220, 247, 0.15);
     transform: translateY(-5px);
   }
+
+  .option-item.correct {
+    border-color: #4CAF50;
+    box-shadow: 0 0 15px rgba(76, 175, 80, 0.3);
+    background: rgba(76, 175, 80, 0.15);
+    transform: translateY(-5px);
+}
+
+.option-item.wrong {
+    border-color: #f44336;
+    box-shadow: 0 0 15px rgba(244, 67, 54, 0.3);
+    background: rgba(244, 67, 54, 0.15);
+    transform: translateY(-5px);
+}
+
+.option-item.correct .option-marker {
+    background: #4CAF50;
+    color: white;
+}
+
+.option-item.wrong .option-marker {
+    background: #f44336;
+    color: white;
+}
   
   .option-marker {
     width: 32px;

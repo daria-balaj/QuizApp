@@ -47,7 +47,7 @@ export class AuthenticationService {
   }
 
   getToken() {
-    console.log(this.token.subscribe());
+    // console.log(this.token.subscribe());
     return this.token.subscribe();
   }
 

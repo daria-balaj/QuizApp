@@ -14,7 +14,7 @@ public class MatchParticipants {
     @ManyToOne
     @MapsId("matchId")
     @JoinColumn(name="match_id")
-    private Matches match;
+    private Match match;
 
     @ManyToOne
     @MapsId("userId")

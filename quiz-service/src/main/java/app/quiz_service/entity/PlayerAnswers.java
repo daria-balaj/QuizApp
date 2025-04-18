@@ -10,7 +10,7 @@ public class PlayerAnswers {
 
     private Long id;
     private Matches match;
-    private Questions question;
+    private Question question;
     private Answers chosenAnswer;
     private LocalDateTime answeredAt = LocalDateTime.now();
 }

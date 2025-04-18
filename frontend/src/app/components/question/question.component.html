@@ -30,7 +30,8 @@
       <button
         type="button"
         class="option-item"
-        [class.selected]="selectedAnswer?.id === answer.id"
+        
+        [ngClass]="getAnswerClass(answer)"
         (click)="selectOption(answer)"
       >
         <div class="option-marker">{{ ["A", "B", "C", "D"][id] }}</div>
