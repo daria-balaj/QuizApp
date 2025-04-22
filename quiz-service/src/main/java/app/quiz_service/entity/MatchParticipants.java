@@ -1,7 +1,5 @@
 package app.quiz_service.entity;
 
-import lombok.Data;
-
 import java.io.Serial;
 
 
@@ -9,7 +7,7 @@ public class MatchParticipants {
 
     private MatchParticipantId id;
 
-    private Matches match;
+    private Match match;
 
     private Integer score = 0;
 

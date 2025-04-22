@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -34,6 +35,12 @@ public class AnswersController {
     @GetMapping("/question/{questionId}")
     public ResponseEntity<List<Answer>> getAnswersByQuestionId(@PathVariable Long questionId) {
         List<Answer> answers = answersService.getAnswersByQuestionId(questionId);
+
+        if (answers == null || answers.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Collections.shuffle(answers); // Shuffle the list of answers
         return ResponseEntity.ok(answers);
     }
 
@@ -46,11 +53,6 @@ public class AnswersController {
     @GetMapping("/correct")
     public ResponseEntity<List<Answers>> getCorrectAnswers() {
         return ResponseEntity.ok(answersService.getCorrectAnswers());
-    }
-
-    @GetMapping("/incorrect")
-    public ResponseEntity<List<Answers>> getIncorrectAnswers() {
-        return ResponseEntity.ok(answersService.getIncorrectAnswers());
     }
 
     @PostMapping

@@ -8,13 +8,16 @@ export function tokenInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn)
   
   const token = inject(AuthenticationService).getToken(); 
 
-  const clonedRequest = req.clone({
-    headers: req.headers.set('Authorization', `Bearer ${token}`)
-  });
-  return next(clonedRequest).pipe(
-    tap((event: HttpEvent<any>) => {
-      if (event.type === HttpEventType.Response) {
-      }
-    })
-  );
+  if (token) {
+    const clonedRequest = req.clone({
+    headers: req.headers.set('Authorization', `Bearer ${token}`),
+    });
+    return next(clonedRequest).pipe(
+      tap((event: HttpEvent<any>) => {
+        if (event.type === HttpEventType.Response) {
+        }
+      })
+    );
+  }
+  return next(req);
 }

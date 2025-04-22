@@ -9,7 +9,7 @@ public class PlayerAnswers {
 
 
     private Long id;
-    private Matches match;
+    private Match match;
     private Question question;
     private Answers chosenAnswer;
     private LocalDateTime answeredAt = LocalDateTime.now();

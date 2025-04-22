@@ -25,9 +25,10 @@ interface ConfettiPiece {
 export class SingleplayerResultsComponent {
   constructor(private readonly quizService: QuizService, private readonly elementRef: ElementRef) {}
 
-  @Input() correctAnswers: number = 12;
-  @Input() score: number = 84;
-  @Input() time: string = '2:45';
+  @Input() matchId?: string;
+  correctAnswers?: number;
+  score?: number;
+  time: any;
   @ViewChild('confettiCanvas', { static: true }) confettiCanvas!: ElementRef<HTMLCanvasElement>;
 
   private ctx!: CanvasRenderingContext2D;
@@ -40,12 +41,14 @@ export class SingleplayerResultsComponent {
   ];
 
   ngOnInit(): void {
+    this.quizService.getQuizResults(this.matchId!).subscribe(result => {
+      this.correctAnswers = result.correctAnswers;
+      this.score = result.score;
+      this.time = result.time;
+    });
     this.initConfetti();
-    
-    if (this.score > 75) {
-      this.generateConfetti();
-      this.animateConfetti();
-    }
+    this.generateConfetti();
+    this.animateConfetti();
   }
 
   private initConfetti(): void {

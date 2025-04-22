@@ -23,6 +23,4 @@ public class User {
     @Column(name = "hashed_password", nullable = false, length = 60)
     private String hashedPassword;
 
-    @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
 }

@@ -41,7 +41,9 @@ public class AnswersServiceImpl implements AnswersService {
     @Override
     public Long getCorrectAnswerId(Long questionId) {
         Answer answer = answersRepository.findByQuestionIdAndIsCorrectTrue(questionId);
-        return answer.getId();
+        if (answer != null)
+            return answer.getId();
+        return null;
     }
 
     @Override

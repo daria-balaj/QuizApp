@@ -232,3 +232,31 @@
       grid-template-columns: 1fr;
     }
   }
+
+  @media (min-width: 768px) {
+    .question-container {
+      width: 630px;
+    }
+    
+    .question-text {
+      font-size: 1.4rem;
+    }
+    
+    .options-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  @media (max-width: 420px) {
+    .question-container {
+      width: 90%;
+      height: fit-content;
+    }
+  }
+
+  .question-text {
+    font-size: 1.6rem;
+    margin-bottom: 30px;
+    line-height: 1.4;
+    flex-shrink: 0; /* Prevents question text from shrinking */
+  }

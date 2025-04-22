@@ -1,15 +1,20 @@
 <div class="single-player-summary">
     <canvas #confettiCanvas class="confetti-canvas"></canvas>
     <div class="stats-card">
-        <mat-icon>check</mat-icon>
-      <div class="stats-value">{{this.correctAnswers}}</div>
+      <mat-icon>check</mat-icon>
+      <div class="stats-value">{{ correctAnswers }}</div>
+      <div class="stats-label">Correct Answers</div>
     </div>
     <div class="stats-card">
-        <mat-icon>percent</mat-icon>
-        <div class="stats-value">{{this.score}}</div>
+      <span class="material-symbols-outlined" id="star-icon">
+        star_shine
+        </span>
+      <div class="stats-value">{{ score }}</div>
+      <div class="stats-label">Score</div>
     </div>
     <div class="stats-card">
-        <mat-icon>timer</mat-icon>
-        <div class="stats-value">{{this.time}}</div>
-    </div>
+      <mat-icon>timer</mat-icon>
+      <div class="stats-value">{{ time }}</div>
+      <div class="stats-label">Time</div>
+    </div>    
   </div>

@@ -6,7 +6,7 @@ import java.io.Serial;
 public class MatchQuestions {
 
     private MatchQuestionId id;
-    private Matches match;
+    private Match match;
     private Question question;
     private int questionOrder;
 

@@ -16,6 +16,7 @@ public class CacheConfig {
 
         // Pre-define cache names
         cacheManager.setCacheNames(Arrays.asList(
+                "users",
                 "categories",
                 "difficulties",
                 "questions",

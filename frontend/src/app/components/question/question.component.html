@@ -30,9 +30,9 @@
       <button
         type="button"
         class="option-item"
-        
         [ngClass]="getAnswerClass(answer)"
-        (click)="selectOption(answer)"
+        (click)="submitAnswer(answer.id)"
+        [disabled]="correctAnswerId !== null"
       >
         <div class="option-marker">{{ ["A", "B", "C", "D"][id] }}</div>
         <div class="option-text">{{ answer.text }}</div>

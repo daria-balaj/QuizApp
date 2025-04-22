@@ -1,22 +1,24 @@
 package com.unitbv.quizz_app.service;
 
-import com.unitbv.quizz_app.entity.Users;
+import com.unitbv.quizz_app.entity.User;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface UsersService {
     
-    Users createUser(String username, String email, String password);
+    User createUser(String username, String email, String password);
 
-    List<Users> getAllUsers();
+    List<User> getAllUsers();
 
 
-    Optional<Users> getUserById(Long id);
+    Optional<User> getUserById(Long id);
 
-    Optional<Users> getUserByUsername(String username);
+    Optional<User> getByUsernameOrEmail(String identifier);
 
-    Users updateUser(Long id, String username, String email, String password);
+    Optional<User> getUserByUsername(String username);
+
+    User updateUser(Long id, String username, String email, String password);
 
     void deleteUser(Long id);
 

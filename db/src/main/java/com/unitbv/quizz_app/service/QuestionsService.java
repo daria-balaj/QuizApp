@@ -12,6 +12,7 @@ public interface QuestionsService {
     Questions createQuestion(String text, Long categoryId, int difficulty);
     Optional<Questions> getQuestionById(Long id);
     List<Questions> getAllQuestions();
+    Integer getQuestionDifficulty(Long id);
     Questions updateQuestion(Long id, String text, Long categoryId, int difficulty);
     void deleteQuestion(Long id);
 
@@ -19,6 +20,7 @@ public interface QuestionsService {
     List<Questions> getQuestionsByCategories(List<Long> categoryIds);
     List<Questions> getQuestionsByDifficulty(int difficulty);
     List<Questions> getQuestionsByCategoriesAndDifficulty(List<Long> categoryIds, int difficulty);
+    List<Questions> getQuestionSet(List<Long> categoryIds, int difficulty, int count);
 
     // Statistics operations
     long countQuestionsByCategory(Long categoryId);

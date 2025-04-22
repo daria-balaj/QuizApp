@@ -19,7 +19,7 @@ public class MatchParticipants {
     @ManyToOne
     @MapsId("userId")
     @JoinColumn(name="user_id")
-    private Users user;
+    private User user;
 
     @Column(name="score", nullable = false)
     private Integer score = 0;

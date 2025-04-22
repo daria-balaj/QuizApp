@@ -2,10 +2,6 @@ package com.unitbv.quizz_app.controller;
 
 import com.unitbv.quizz_app.entity.Questions;
 import com.unitbv.quizz_app.service.QuestionsService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,15 +24,18 @@ public class QuestionsController {
 
     @GetMapping
     public ResponseEntity<List<Questions>> getAllQuestions(
-            @RequestParam(required = false) List<Long> categoryId,
-            @RequestParam(required = false) int difficulty
+            @RequestParam(name= "categoryId") List<Long> categoryIds,
+            @RequestParam(name = "difficulty") int difficulty,
+            @RequestParam(name = "count") int count
     ) {
         List<Questions> questions;
 
-        if (categoryId != null && !categoryId.isEmpty() && difficulty >= 1 && difficulty <= 3) {
-            questions = questionsService.getQuestionsByCategoriesAndDifficulty(categoryId, difficulty);
-        } else if (categoryId != null && !categoryId.isEmpty()) {
-            questions = questionsService.getQuestionsByCategories(categoryId);
+        if (categoryIds != null && !categoryIds.isEmpty() &&
+            difficulty >= 1 && difficulty <= 3 &&
+            count >= 1) {
+            questions = questionsService.getQuestionSet(categoryIds, difficulty, count);
+        } else if (categoryIds != null && !categoryIds.isEmpty()) {
+            questions = questionsService.getQuestionsByCategories(categoryIds);
         } else if (difficulty >= 1 && difficulty <= 3) {
             questions = questionsService.getQuestionsByDifficulty(difficulty);
         } else {
@@ -59,10 +58,10 @@ public class QuestionsController {
         return ResponseEntity.ok(count);
     }
 
-    @GetMapping("/count/difficulty/{difficultyId}")
-    public ResponseEntity<Long> countQuestionsByDifficulty(@PathVariable int difficulty) {
-        long count = questionsService.countQuestionsByDifficulty(difficulty);
-        return ResponseEntity.ok(count);
+
+    @GetMapping("difficulty/{id}")
+    public Integer getQuestionDifficultyById(@PathVariable Long id) {
+        return questionsService.getQuestionDifficulty(id);
     }
 
     @PostMapping

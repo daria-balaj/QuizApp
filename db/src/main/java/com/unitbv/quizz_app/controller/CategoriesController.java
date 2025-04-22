@@ -20,12 +20,13 @@ public class CategoriesController {
     }
 
 
-
     @GetMapping
     public ResponseEntity<List<Category>> getAllCategories(
             @RequestParam(required = false) Boolean sorted,
             @RequestParam(required = false) Boolean withQuestions
     ) {
+        long start = System.currentTimeMillis();
+
         List<Category> categories;
         if(Boolean.TRUE.equals(withQuestions)) {
             categories = categoriesService.getCategoriesWithQuestions();
@@ -34,6 +35,8 @@ public class CategoriesController {
         } else {
             categories = categoriesService.getAllCategories();
         }
+
+        System.out.println("Time taken: " + (System.currentTimeMillis() - start) + "ms");
         return ResponseEntity.ok(categories);
     }
 

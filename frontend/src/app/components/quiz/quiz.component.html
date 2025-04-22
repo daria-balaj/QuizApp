@@ -1,13 +1,16 @@
 <div class="quiz-container">
+    <button mat-icon-button [routerLink]="['/start-page']" id="back-button">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
   @if(loading) {
     <mat-spinner></mat-spinner>
   } @else {
     <app-question
+      [matchId]="this.matchId!"
       [question]="questions[currentIndex]"
       [answers]="answers"
       [index]="currentIndex"
       [totalQuestions]="questions.length"
-      (answerSelected)="onAnswerSelected($event)"
       (next)="nextQuestion()"
     />
   }

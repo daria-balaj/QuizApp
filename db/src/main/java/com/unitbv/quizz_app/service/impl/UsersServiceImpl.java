@@ -1,6 +1,7 @@
 package com.unitbv.quizz_app.service.impl;
 
-import com.unitbv.quizz_app.entity.Users;
+import com.unitbv.quizz_app.entity.User;
+import com.unitbv.quizz_app.exceptions.UserAlreadyExistsException;
 import com.unitbv.quizz_app.repository.UsersRepository;
 import com.unitbv.quizz_app.service.UsersService;
 import org.springframework.cache.annotation.Cacheable;
@@ -19,10 +20,12 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public Users createUser(String username, String email, String password) {
-        Users user = new Users();
-        user.setUsername(username);  
-        user.setCreatedAt(LocalDateTime.now());  
+    public User createUser(String username, String email, String password) {
+        if (usersRepository.existsByUsername(username)) {
+            throw new UserAlreadyExistsException("Username is taken");
+        }
+        User user = new User();
+        user.setUsername(username);
         user.setEmail(email);
         user.setHashedPassword(password);  
         return usersRepository.save(user);
@@ -30,27 +33,36 @@ public class UsersServiceImpl implements UsersService {
 
     @Override
     @Cacheable(value="users", key="'all'")
-    public List<Users> getAllUsers(){
+    public List<User> getAllUsers(){
         return usersRepository.findAll();
     }
 
     @Override
     @Cacheable(value="users", key="#id")
-    public Optional<Users> getUserById(Long id) {  
+    public Optional<User> getUserById(Long id) {
         return usersRepository.findById(id);
     }
 
     @Override
     @Cacheable(value="users", key="#username")
-    public Optional<Users> getUserByUsername(String username) {  
+    public Optional<User> getUserByUsername(String username) {
         return usersRepository.findByUsername(username);  
     }
 
     @Override
-    public Users updateUser(Long id, String username, String email, String password) {  
-        Optional<Users> optionalUser = usersRepository.findById(id);
+    public Optional<User> getByUsernameOrEmail(String identifier) {
+        Optional<User> user = usersRepository.findByUsername(identifier);
+        if (user.isEmpty()) {
+            user = usersRepository.findByEmail(identifier);
+        }
+        return user;
+    }
+
+    @Override
+    public User updateUser(Long id, String username, String email, String password) {
+        Optional<User> optionalUser = usersRepository.findById(id);
         if (optionalUser.isPresent()) {
-            Users user = optionalUser.get();
+            User user = optionalUser.get();
             user.setUsername(username);  
             user.setEmail(email);
             user.setHashedPassword(password);  

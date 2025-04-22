@@ -1,19 +1,20 @@
 .navbar-wrapper {
     width: 100%;
     margin-bottom: 1rem;
-    position: relative;
+    position: absolute;
+    top: 0;
+    left: 0;
     color: white;
   }
   
   .navbar {
-    margin: 0 auto;
     justify-content: space-between;
     align-content: center;
-    padding: 2rem;
+    padding: 45px 35px;
   }
 
   #branding {
-    font-size: 2rem;
+    font-size: 3rem;
     background: linear-gradient(to right, #d4b0fa, #eadafb);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -34,6 +35,9 @@ ul {
     height: fit-content;
 }
 
+form {
+  margin-top: 25px;
+}
 
 .form-control {    
     border: 1px solid var(--light-purple);
@@ -43,6 +47,22 @@ ul {
     max-width: unset !important;
 }
 
+.account-button {
+  background: linear-gradient(to right, #d4b0fa, #eadafb);
+  background-clip: text;
+  display: inline-block;
+  
+  color: #e9dcf7;
+  border-radius: 5px;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  
+  mat-icon {
+    width: 50px;
+    font-size: 2.5rem !important;
+  }
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -50,9 +70,10 @@ body {
   }
   
   .login-container {
+    text-align: center;
     width: 320px;
     padding: 30px;
-    background: rgba(22, 1, 32, 0.90);
+    background: rgba(22, 1, 32, 0.97);
     box-sizing: border-box;
     border-radius: 15px;
   }
@@ -78,6 +99,10 @@ body {
     border-bottom: 1px solid #fff;
     outline: none;
   }
+
+  #signupUsername {
+    margin-bottom: 10px !important;
+  }
   
   .login-container .user-box label {
     position: absolute;
@@ -87,7 +112,7 @@ body {
     font-size: 16px;
     color: #fff;
     pointer-events: none;
-    transition: .5s;
+    transition: .25s;
   }
   
   .login-container .user-box input:focus ~ label,
@@ -108,7 +133,7 @@ body {
     text-transform: uppercase;
     overflow: hidden;
     transition: .5s;
-    margin-top: 40px;
+    margin-top: 10px;
     letter-spacing: 5px;
   }
   
@@ -203,4 +228,41 @@ body {
   input:-webkit-autofill-selected:hover {
     background-color: transparent !important;
 
+  }
+
+  .auth-toggle-header {
+    h6 {
+      display: flex;
+      gap: 1.5rem;
+      
+      span {
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+        position: relative;
+        transition: color 0.s ease;
+        color: #e2cef5;
+        
+        &.active {
+          font-weight: bold;
+          
+          &:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: -3px;
+            left: 0;
+            background-color: #e2cef5;
+          }
+        }
+      }
+    }
+  }
+
+  .submit-button {
+    cursor: pointer;
+  }
+
+  #logout-button, #logout-icon {
+    color: #e2cef5;
   }

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
 import { BehaviorSubject, map, Observable } from 'rxjs';
@@ -9,6 +9,8 @@ import { User } from '../models/user';
 })
 export class AuthenticationService {
 
+  authUrl = environment.authApiUrl;
+
   constructor(private readonly httpClient: HttpClient) { }
 
   currentUser = new BehaviorSubject<User | null>(null);
@@ -17,13 +19,20 @@ export class AuthenticationService {
 
   token = new BehaviorSubject<string | null>(null);
 
+  checkUsernameAvailability(username: string): Observable<boolean> {
+    const params = new HttpParams().set('username', username);
+    return this.httpClient.get<boolean>(`${this.authUrl}/auth/username-available`, { params }).pipe(
+      map((response: any) => {
+        return response;
+      })
+    );
+  }
+
   register(newUser: any) {
-    return this.httpClient.post<User>(`${environment.authApiUrl}/register`, newUser).pipe(
+    return this.httpClient.post<User>(`${this.authUrl}/auth/register`, newUser).pipe(
       map(user => {
-        console.log(user);
         if (user) {
           this.currentUser.next(user);
-          console.log("current user:", this.currentUser);
           localStorage.setItem("token", user.token);
           return true;
         }
@@ -32,13 +41,13 @@ export class AuthenticationService {
     )    
   }
 
-  login(email: string, password: string) : Observable<boolean> {
-    return this.httpClient.post<string>(`${environment.authApiUrl}/login`, { email: email, password: password }).pipe(
+  login(usernameOrEmail: string, password: string) : Observable<boolean> {
+    return this.httpClient.post<{token: string}>(`${this.authUrl}/auth/login`, { identifier: usernameOrEmail, password: password }).pipe(
       map((response: any) => {
-        console.log(response);
         if (response) {
           this.token.next(response.token);
           this.currentUser.next(response);
+          localStorage.setItem("token", response.token);
           return true;
         }
         return false;
@@ -47,12 +56,11 @@ export class AuthenticationService {
   }
 
   getToken() {
-    // console.log(this.token.subscribe());
-    return this.token.subscribe();
+    return localStorage.getItem('token');
   }
 
   logout() {
-    localStorage.removeItem('user');
+    localStorage.removeItem('token');
     this.currentUser.next(null);
   }
 }

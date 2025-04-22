@@ -55,6 +55,11 @@ public class QuestionsServiceImpl implements QuestionsService {
     }
 
     @Override
+    public Integer getQuestionDifficulty(Long id) {
+        return questionsRepository.getDifficultyById(id);
+    }
+
+    @Override
     @Transactional
     public Questions updateQuestion(Long id, String text, Long categoryId, int difficulty) {
         Optional<Questions> questionOpt = questionsRepository.findById(id);
@@ -87,6 +92,15 @@ public class QuestionsServiceImpl implements QuestionsService {
         }
         return questionsRepository.findByCategoryIn(categories);
     }
+
+    @Override
+    public List<Questions> getQuestionSet(List<Long> categoryIds, int difficulty, int count) {
+        if (categoryIds.isEmpty()) {
+            return Collections.emptyList();
+        }
+        return questionsRepository.findRandomQuestions(categoryIds, difficulty, count);
+    }
+
 
     @Override
     @Cacheable(value = "questions", key = "'difficulty' + #difficultyId")

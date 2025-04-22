@@ -1,12 +1,6 @@
 package app.quiz_service.controller;
 
-import app.quiz_service.entity.Answers;
-import app.quiz_service.service.AnswersService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/answers")

@@ -2,43 +2,73 @@
 <div class="navbar w-screen h-12 px-4 mb-4 content-center flex flex-row flex-wrap">
     <a id="branding" class="modak-regular" href="/start-page">Quizmo</a>
     <ul class="flex flex-row items-center">
-        <li>
-          <a [matMenuTriggerFor]="menu" class="pt-2 rounded-full flex items-center justify-center">
-            <mat-icon [matBadge]="1" [matBadgeColor]="'accent'" [matBadgeHidden]="(this.authService.currentUser$ | async) === null" class="text-purple-200">account_circle</mat-icon>
-          </a>
-          <mat-menu #menu="matMenu" class="menu" [hasBackdrop]="false">
-            <div class="login-container" (click)="$event.stopPropagation()" (keydown)="$event.stopPropagation()">
-              <ng-container *ngIf="(this.authService.currentUser$ | async) as user">
-                <h2>User Menu</h2>
-                <button mat-menu-item (click)="logout()" class="user-box">
-                  <mat-icon>logout</mat-icon>
-                  <span>Logout</span>
-                </button>
-              </ng-container>
-              <ng-container *ngIf="!(this.authService.currentUser$ | async)" (click)="$event.stopPropagation()">
-                <h2>Login</h2>
-                <span id="error" class="text-red-300 text-sm mb-2 block" [hidden]="errorMessage.length === 0">{{errorMessage}}</span>
-                <form [formGroup]="form" (ngSubmit)="onSubmit()">
-                  <div class="user-box">
-                    <input id="email" type="email" formControlName="email" required autocomplete="off">
-                    <label for="email">Email</label>
-                  </div>
-                  <div class="user-box">
-                    <input id="password" type="password" formControlName="password" required>
-                    <label for="password">Password</label>
-                  </div>
-                  <a href="javascript:void(0)" (click)="onSubmit()">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    Submit
-                  </a>
-                </form>
-              </ng-container>
+      <li>
+      <a [matMenuTriggerFor]="menu" class="account-button pt-2 rounded-full flex items-center justify-center">
+        <mat-icon [matBadge]="1" [matBadgeColor]="'accent'" [matBadgeHidden]="(this.authService.currentUser$ | async) === null" class="text-purple-200">account_circle</mat-icon>
+      </a>
+      <mat-menu #menu="matMenu" class="menu" [hasBackdrop]="true">
+        <div class="login-container varela-round-regular" (click)="$event.stopPropagation()" (keydown)="$event.stopPropagation()">
+          <ng-container *ngIf="(this.authService.currentUser$ | async) as user">
+            <button mat-menu-item (click)="logout()" class="user-box">
+              <mat-icon id="logout-icon">logout</mat-icon>
+              <span id="logout-button">Logout</span>
+            </button>
+          </ng-container>
+          
+          <ng-container *ngIf="!(this.authService.currentUser$ | async)" (click)="$event.stopPropagation()">
+            <div class="auth-toggle-header flex justify-center mb-3">
+              <h6>
+                <span [class.active]="!isSignUpMode" (click)="isSignUpMode = false">Log In</span>
+                <span [class.active]="isSignUpMode" (click)="isSignUpMode = true">Sign Up</span>
+              </h6>
             </div>
-          </mat-menu>
-        </li>
-      </ul>
-</div>
+            
+            <span id="error" class="text-red-300 text-sm mb-2 block" [hidden]="errorMessage.length === 0">{{errorMessage}}</span>
+            
+            <!-- Login Form -->
+            <form *ngIf="!isSignUpMode" [formGroup]="loginForm" (ngSubmit)="login()">
+              <div class="user-box">
+                <input id="usernameOrEmail" type="text" formControlName="usernameOrEmail" required autocomplete="off">
+                <label for="usernameOrEmail">Username or email</label>
+              </div>
+              
+              <div class="user-box">
+                <input id="password" type="password" formControlName="password" required>
+                <label for="password">Password</label>
+              </div>
+              
+              <a (click)="login() " class="submit-button">                     <span></span>                     <span></span>                     <span></span>                     <span></span>                     Submit                   </a> 
+            </form>
+            
+            <!-- Sign Up Form -->
+            <form *ngIf="isSignUpMode" [formGroup]="registerForm" (ngSubmit)="register()">
+              
+              <div class="user-box">
+                <input id="signupUsername" type="text" formControlName="username" required autocomplete="off">
+                <label for="signupUsername">Username</label>
+                <span *ngIf="registerForm.get('username')?.hasError('usernameTaken')" class="text-red-300 text-xs mb-2">
+                  Username is already taken.
+                </span>
+                <span *ngIf="registerForm.get('username')?.valid && registerForm.get('username')?.dirty" class="text-green-300 text-xs mb-2">
+                  Username is available! ✅
+                </span>
+              </div>
+              
+              <div class="user-box">
+                <input id="email" type="email" formControlName="email" required autocomplete="off">
+                <label for="email">Email</label>
+              </div>
+              
+              <div class="user-box">
+                <input id="signupPassword" type="password" formControlName="password" required>
+                <label for="signupPassword">Password</label>
+              </div>
+
+              <a (click)="register()" class="submit-button" >                     <span></span>                     <span></span>                     <span></span>                     <span></span>                     Submit                   </a> 
+            </form>
+          </ng-container>
+        </div>
+      </mat-menu>
+    </li>
+  </ul>
 </div>

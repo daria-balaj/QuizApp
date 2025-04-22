@@ -13,6 +13,7 @@ import { QuizService } from '../../services/quiz.service';
   styleUrl: './question.component.css',
 })
 export class QuestionComponent {
+  matchId = input.required<string>();
   question = input.required<Question>();
   answers = input.required<Answer[]>();
 
@@ -20,11 +21,10 @@ export class QuestionComponent {
   totalQuestions = input.required<number>();
   timePerQuestion = 30;
 
-  selectedAnswer: Answer | null = null;
+  selectedAnswerId: number | null = null;
   timeRemaining: number = this.timePerQuestion;
   timerSubscription: Subscription = new Subscription();
 
-  answerSelected = output<Answer>();
   next = output<void>();
   finish = output<void>();
 
@@ -34,7 +34,8 @@ export class QuestionComponent {
     effect(() => {
       const currentQuestion = this.question();
       if (currentQuestion) {
-        this.selectedAnswer = null;
+        this.selectedAnswerId = null;
+        this.correctAnswerId = null;
         this.startTimer();
       }
     });
@@ -59,22 +60,6 @@ export class QuestionComponent {
     });
   }
 
-  selectOption(option: Answer): void {
-    if (this.selectedAnswer) {
-      return; 
-    }
-    this.selectedAnswer = option;
-
-    this.answerSelected.emit(option);
-
-    this.quizService.checkAnswer(this.question().id, this.selectedAnswer.id).subscribe((correctAnswerId) => {
-      this.correctAnswerId = correctAnswerId;
-      setTimeout(() => {
-        this.nextQuestion();
-      }, 2000); 
-    });
-  }
-
   nextQuestion(): void {
     if (this.timerSubscription) {
       this.timerSubscription.unsubscribe();
@@ -83,12 +68,7 @@ export class QuestionComponent {
   }
 
   timeUp(): void {
-    this.quizService.getCorrectAnswer(this.question().id).subscribe((correctAnswerId) => {
-      this.correctAnswerId = correctAnswerId;
-      setTimeout(() => {
-        this.next.emit();
-      }, 2000);
-    });
+    this.submitAnswer(null);
   }
 
   formatTime(seconds: number): string {
@@ -97,24 +77,34 @@ export class QuestionComponent {
     return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
   }
 
-  getCorrectAnswerId() {
-    this.quizService.getCorrectAnswer(this.question().id).subscribe((correctAnswerId) => {
-      this.correctAnswerId = correctAnswerId;
-    });
+  submitAnswer(answerId: number | null): void {
+    if (this.selectedAnswerId == null) {
+      if (answerId) {
+        this.selectedAnswerId = answerId;
+      }
+      console.log(this.index(), this.totalQuestions());
+      this.quizService.submitAnswer(this.matchId(), this.question().id, answerId, this.index() + 1 == this.totalQuestions()).subscribe((correctAnswerId) => {
+        this.correctAnswerId = correctAnswerId;
+        setTimeout(() => {
+          this.nextQuestion();
+        }, 2000);
+      });
+    }
   }
 
   getAnswerClass(answer: Answer): string {
-    if (this.selectedAnswer || (!this.selectedAnswer && this.timeRemaining <= 0)) {
-      if (!this.correctAnswerId)  {
-        this.getCorrectAnswerId();
-      }
-      if (this.selectedAnswer?.id === answer.id && this.selectedAnswer.id !== this.correctAnswerId) {
-        return 'wrong';
-      } 
-      else if (this.correctAnswerId === answer.id) {
-        return 'correct';
-      }
+    if (this.correctAnswerId === null) {
+      return '';
     }
+  
+    if (this.selectedAnswerId === answer.id && this.selectedAnswerId !== this.correctAnswerId) {
+      return 'wrong';
+    }
+  
+    if (this.correctAnswerId === answer.id) {
+      return 'correct';
+    }
+
     return '';
   }
 }

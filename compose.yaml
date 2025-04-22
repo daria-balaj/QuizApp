@@ -7,17 +7,76 @@
 # You can add other services your application may depend on here, such as a
 # database or a cache. For examples, see the Awesome Compose repository:
 # https://github.com/docker/awesome-compose
+
 services:
-  server:
+  database:
     build:
       context: .
+      dockerfile: Dockerfile
+    image: postgres
+    restart: always
+    user: postgres
     environment:
-      NODE_ENV: production
+      POSTGRES_DB: quizapp
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1q2w3e
+    volumes:
+      - quizapp_db:/var/lib/postgresql/data  # Mount volume for database data
+    ports:
+      - "5432:5432"
+    expose:
+      - 5432
+    healthcheck:
+      test: [ "CMD", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  db-service:
+    image: db-service
+    build: ./db
+    depends_on:
+      - database
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://database:5432/quizapp
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 1q2w3e
+
+  frontend: 
+    image: client
+    depends_on:
+      - db-service
+    build:
+      context: ./frontend
+    environment:
+      NODE_ENV: development
     ports:
       - 4200:4200
     volumes:
       - .:/app  # Sync local files with container
       - /app/node_modules
+
+  quiz-service:
+    image: quiz-service
+    build: ./quiz-service
+    ports:
+      - "8081:8081"
+    depends_on:
+      - db-service
+
+  auth-service:
+    image: auth-service
+    depends_on:
+      - db-service
+    build: ./auth-service
+    ports:
+      - "8082:8082"
+
+volumes:
+  quizapp_db:  # Define the volume here
+
 
 # The commented out section below is an example of how to define a PostgreSQL
 # database that your application can use. `depends_on` tells Docker Compose to

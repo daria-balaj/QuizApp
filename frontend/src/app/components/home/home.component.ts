@@ -5,9 +5,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { QuizService } from '../../services/quiz.service';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { Category } from '../../models/category';
 import { Difficulty } from '../../enums/difficulty';
+import { Quiz } from '../../models/quiz';
 
 @Component({
   selector: 'app-home',
@@ -18,6 +19,7 @@ import { Difficulty } from '../../enums/difficulty';
     MatButtonModule,
     FormsModule,
     MatIconModule,
+    RouterModule
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
@@ -60,7 +62,7 @@ export class HomeComponent implements OnInit {
   }
 
   updateQuestionCount(): void {
-    console.log('Question count updated to:', this.questionCount);
+    // console.log('Question count updated to:', this.questionCount);
   }
 
   isCategorySelected(): boolean {
@@ -79,7 +81,16 @@ export class HomeComponent implements OnInit {
         this.difficulty,
         this.questionCount
       );
-      this.router.navigate(['/quiz']);
+      this.quizService.startQuiz({
+        categories: this.selectedCategories,
+        difficulty: this.difficulty,
+        questionCount: this.questionCount
+      }).subscribe((quiz: Quiz) => {
+        this.router.navigate(['/quiz', quiz.id], {
+          state: { questions: quiz.questions }
+        });
+      });
+      // this.router.navigate(['/quiz']);
     }
   }
 

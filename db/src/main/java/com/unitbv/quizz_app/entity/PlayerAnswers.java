@@ -20,7 +20,7 @@ public class PlayerAnswers {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private Users user;
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "question_id", nullable = false)

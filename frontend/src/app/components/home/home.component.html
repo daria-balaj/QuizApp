@@ -37,32 +37,30 @@
         </div>
 
         <h2 class="section-title">Choose Your Categories</h2>
-        <p class="note">Please select at least one category</p>
+        <p class="note">Pick one or more categories</p>
         <div class="category-grid">
           @for(category of categories; track category.id) {
-            <div class="category-item">
+            <div class="cat">
               <input
                 type="checkbox"
-                [id]="'category-' + category.id"
+                [id]="category.name.toLocaleLowerCase()"
                 [checked]="isCategoryChecked(category)"
                 (change)="toggleCategorySelection(category)"
               />
-              <label [for]="'category-' + category.id">
+              <!-- <label [for]="'category-' + category.id"> -->
+              <label [for]="category.name.toLocaleLowerCase()">
                 {{ category.name }}
               </label>
             </div>
           }
-          
         </div>
-        
-        
       </section>
 
       <section class="settings-section">
         <div class="difficulty-selector">
           <h3 class="section-title">Difficulty Level</h3>
-          <div class="difficulty-options">
-            <div class="difficulty-option">
+          <div class="diff-opts">
+            <div class="diff-opt">
               <input
                 type="radio"
                 id="easy"
@@ -80,7 +78,7 @@
                 Easy
               </label>
             </div>
-            <div class="difficulty-option">
+            <div class="diff-opt">
               <input
                 type="radio"
                 id="medium"
@@ -98,7 +96,7 @@
                 Medium
               </label>
             </div>
-            <div class="difficulty-option">
+            <div class="diff-opt">
               <input
                 type="radio"
                 id="hard"
@@ -131,7 +129,7 @@
             max="25"
             [(ngModel)]="questionCount"
             (input)="updateQuestionCount()"
-            class="count-slider"
+            class="slider"
             id="questionCount"
           />
           <div class="count-display" id="countDisplay">

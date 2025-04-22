@@ -3,6 +3,7 @@ package com.unitbv.quizz_app.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "matches")
@@ -10,28 +11,21 @@ import java.time.LocalDateTime;
 public class Match {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "match_id")
-    private Long id;
+    @GeneratedValue
+    @Column(name = "id", columnDefinition = "UUID")
+    private UUID id;
 
-    @ManyToOne
-    @JoinColumn(name="category_id", nullable = false)
-    private Category category;
 
-    @Column(name="difficulty_id", nullable = false)
-    private Long difficultyId;
+    @Column(name = "correct_answers")
+    private int correctAnswerCount;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name="status", nullable = false)
-    private MatchStatus status = MatchStatus.ACTIVE;
-    
-    @Column(name="created_at", nullable=false, updatable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
+    @Column(name = "score")
+    private int score;
 
-    @Column(name = "ended_at")
-    private LocalDateTime endedAt;
-    
-    public enum MatchStatus {
-        ACTIVE, COMPLETED, CANCELED;
-    }
+    @Column(name = "started_at")
+    private LocalDateTime startedAt;
+
+    @Column(name = "completed_at")
+    private LocalDateTime completedAt;
+
 }
