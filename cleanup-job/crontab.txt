@@ -1,0 +1,1 @@
+0 3 * * * /cleanup.sh >> /var/log/cleanup.log 2>&1

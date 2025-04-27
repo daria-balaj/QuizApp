@@ -46,6 +46,41 @@ export class HomeComponent implements OnInit {
     this.quizService.getCategories().subscribe((categories) => {
       this.categories = categories;
     });
+    //TODO
+    this.categories = [
+      {
+          "id": 1,
+          "name": "History"
+      },
+      {
+          "id": 2,
+          "name": "Movies"
+      },
+      {
+          "id": 3,
+          "name": "Science"
+      },
+      {
+          "id": 4,
+          "name": "Music"
+      },
+      {
+          "id": 5,
+          "name": "Geography"
+      },
+      {
+          "id": 6,
+          "name": "Sports"
+      },
+      {
+          "id": 7,
+          "name": "Languages"
+      },
+      {
+          "id": 8,
+          "name": "Literature"
+      }
+    ];
   }
 
   toggleCategorySelection(category: Category): void {

@@ -15,7 +15,6 @@
     }
   }
   
-  /* Progress bar styles */
   .question-header {
     display: flex;
     justify-content: space-between;
@@ -48,7 +47,6 @@
     color: rgba(255, 255, 255, 0.7);
   }
   
-  /* Timer styles */
   .timer {
     display: flex;
     align-items: center;
@@ -69,7 +67,6 @@
     font-size: 1.1rem;
   }
   
-  /* Question content styles */
   .question-content {
     margin-bottom: 30px;
   }
@@ -80,7 +77,6 @@
     line-height: 1.4;
   }
   
-  /* Options grid styles */
   .options-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -161,7 +157,6 @@
     line-height: 1.4;
   }
   
-  /* Action buttons styles */
   .question-actions {
     display: flex;
     justify-content: flex-end;
@@ -258,5 +253,5 @@
     font-size: 1.6rem;
     margin-bottom: 30px;
     line-height: 1.4;
-    flex-shrink: 0; /* Prevents question text from shrinking */
+    flex-shrink: 0;
   }

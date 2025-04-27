@@ -74,6 +74,15 @@ services:
     ports:
       - "8082:8082"
 
+  cleanup:
+    build: ./cleanup-job
+    depends_on:
+      - database
+    networks:
+      - default
+    environment:
+      - PGPASSWORD=1q2w3e
+
 volumes:
   quizapp_db:  # Define the volume here
 
